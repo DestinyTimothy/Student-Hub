@@ -1,0 +1,422 @@
+/* Using the same color variables as previous pages */
+:root {
+    --background-black: #0A0A0C;
+    --panel-background: #1C1C1E;
+    --text-color-primary: #FFFFFF;
+    --text-color-secondary: #AEAEB2;
+    --border-color: #3A3A3C;
+    --gradient-purple: #5856d6; /* Indigo/Purple */
+    --gradient-blue: #007AFF; /* Blue */
+    --button-primary: #007AFF;
+    --button-secondary: #3A3A3C;
+    --button-text: #FFFFFF;
+
+    /* Course Colors (Aesthetic Palette) */
+    --course-color-1: #FFD700; /* Gold */
+    --course-color-2: #FF6347; /* Tomato */
+    --course-color-3: #4682B4; /* SteelBlue */
+    --course-color-4: #9370DB; /* MediumPurple */
+    --course-color-5: #32CD32; /* LimeGreen */
+    --course-color-6: #FF8C00; /* DarkOrange */
+    --course-color-7: #20B2AA; /* LightSeaGreen */
+}
+
+body {
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+    background-color: var(--background-black);
+    color: var(--text-color-primary);
+    min-height: 100vh;
+    position: relative;
+    padding-bottom: 50px;
+    overflow-x: hidden;
+}
+
+.background-gradient {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at top left, var(--gradient-purple) 0%, transparent 25%),
+                radial-gradient(circle at bottom right, var(--gradient-blue) 0%, transparent 25%);
+    opacity: 0.15;
+    z-index: -1;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    position: relative;
+    z-index: 5;
+}
+
+header {
+    padding: 20px;
+    display: flex;
+    justify-content: flex-end;
+    position: relative;
+    z-index: 10;
+}
+
+.header-content {
+    display: flex;
+    align-items: center;
+}
+
+.clock {
+    font-size: 1rem;
+    color: var(--text-color-secondary);
+    background-color: rgba(28, 28, 30, 0.6);
+    padding: 8px 15px;
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+.timetable-app-container h1 {
+    font-size: 2.5em;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.timetable-app-container p {
+    font-size: 1.1em;
+    color: var(--text-color-secondary);
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.timetable-input-section,
+.timetable-display-section,
+.notification-settings-section {
+    background-color: var(--panel-background);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 30px;
+}
+
+.timetable-input-section h2,
+.timetable-display-section h2,
+.notification-settings-section h2 {
+    font-size: 1.8em;
+    margin-top: 0;
+    margin-bottom: 20px;
+    color: var(--text-color-primary);
+}
+
+.day-inputs {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Responsive grid for days */
+    gap: 20px;
+}
+
+.day-input-block {
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.day-input-block h3 {
+    font-size: 1.3em;
+    margin: 0 0 10px 0;
+    color: var(--text-color-primary);
+}
+
+.courses-for-day {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.course-input-row {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr auto; /* Name, Start, End, Remove */
+    gap: 10px;
+    align-items: center;
+    animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.course-input-row input[type="text"],
+.course-input-row input[type="time"] {
+    padding: 10px;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    background-color: #2C2C2E;
+    color: var(--text-color-primary);
+    font-size: 0.9em;
+    box-sizing: border-box;
+}
+
+.course-input-row input::placeholder {
+    color: var(--text-color-secondary);
+    opacity: 0.7;
+}
+
+.remove-course-btn {
+    background-color: #FF3B30;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 8px 12px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+    line-height: 1;
+}
+
+.remove-course-btn:hover {
+    background-color: #CC0000;
+}
+
+.add-course-btn {
+    align-self: flex-start; /* Align button to the start */
+    margin-top: 5px;
+}
+
+.action-button {
+    border: none;
+    border-radius: 8px;
+    padding: 15px 30px;
+    font-size: 1.1em;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out, transform 0.1s ease-in-out;
+    color: var(--button-text);
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.action-button.primary {
+    background-color: var(--button-primary);
+}
+
+.action-button.primary:hover {
+    background-color: #0056b3;
+}
+
+.action-button.secondary {
+    background-color: var(--button-secondary);
+}
+
+.action-button.secondary:hover {
+     background-color: #4A4A4C;
+}
+
+.action-button.small {
+    padding: 8px 12px;
+    font-size: 0.9em;
+}
+
+#save-timetable-btn {
+    display: block;
+    width: 100%;
+    margin-top: 30px;
+}
+
+/* Updated styles for the timetable display to stack days */
+.timetable-grid {
+    display: flex; /* Use flexbox */
+    flex-direction: column; /* Stack items vertically */
+    gap: 20px; /* Space between day blocks */
+}
+
+.day-column {
+    background-color: #2C2C2E;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    animation: fadeIn 0.3s ease-out;
+    width: 100%; /* Take full width */
+    box-sizing: border-box; /* Include padding in width */
+}
+
+.day-column h3 {
+    font-size: 1.2em;
+    margin: 0 0 5px 0;
+    color: var(--text-color-primary);
+    text-align: left; /* Align day name to the left */
+}
+
+.course-entry {
+    background-color: var(--card-background);
+    border-left: 5px solid;
+    border-radius: 6px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    font-size: 0.9em;
+    color: var(--text-color-secondary);
+}
+
+.course-entry .course-name {
+    font-weight: 600;
+    color: var(--text-color-primary);
+    word-break: break-word; /* Allow long course names to wrap */
+}
+
+.course-entry .course-time {
+    font-size: 0.8em;
+    word-break: break-word; /* Allow long time strings to wrap if necessary */
+}
+
+.no-timetable-message {
+    text-align: center;
+    color: var(--text-color-secondary);
+    margin-top: 20px;
+    /* Removed grid-column span as it's not a grid anymore */
+}
+
+.notification-settings-section p {
+    font-size: 1em;
+    color: var(--text-color-secondary);
+    margin-bottom: 15px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .container {
+        padding: 15px;
+    }
+
+    header {
+        padding: 15px;
+    }
+
+    .clock {
+        font-size: 0.9rem;
+        padding: 6px 12px;
+    }
+
+    .timetable-app-container h1 {
+        font-size: 2em;
+    }
+
+    .timetable-app-container p {
+        font-size: 1em;
+        margin-bottom: 30px;
+    }
+
+    .timetable-input-section,
+    .timetable-display-section,
+    .notification-settings-section {
+        padding: 15px;
+    }
+
+    .timetable-input-section h2,
+    .timetable-display-section h2,
+    .notification-settings-section h2 {
+        font-size: 1.5em;
+    }
+
+    .day-inputs {
+        grid-template-columns: 1fr; /* Stack day inputs on small screens */
+        gap: 15px;
+    }
+
+    .day-input-block {
+        padding: 10px;
+    }
+
+    .day-input-block h3 {
+        font-size: 1.1em;
+    }
+
+    .courses-for-day {
+         gap: 8px; /* Reduce gap between courses */
+    }
+
+    .course-input-row {
+        grid-template-columns: 1fr auto; /* Stack name, time inputs, keep remove button */
+        gap: 8px;
+    }
+
+     .course-input-row input[type="text"],
+     .course-input-row input[type="time"] {
+         grid-column: span 2; /* Make name and time inputs span both columns */
+         font-size: 0.8em;
+         padding: 8px;
+     }
+
+     /* Specific adjustment for time inputs to potentially share a row if desired,
+        but stacking is simpler and more reliable on very small screens */
+     /* If you wanted them side-by-side on small screens:
+     .course-input-row input[type="time"] {
+         grid-column: span 1;
+     }
+     */
+
+
+    .remove-course-btn {
+        padding: 6px 10px;
+        font-size: 0.9em;
+    }
+
+    .add-course-btn {
+        font-size: 0.8em;
+        padding: 6px 10px;
+    }
+
+    .action-button.primary,
+    .action-button.secondary {
+        font-size: 1em;
+        padding: 12px 20px;
+    }
+
+    #save-timetable-btn {
+        margin-top: 20px;
+    }
+
+    /* Timetable display responsive adjustments */
+    .timetable-grid {
+        gap: 15px; /* Reduce gap between stacked days */
+    }
+
+    .day-column {
+        padding: 10px;
+        gap: 8px;
+    }
+
+    .day-column h3 {
+        font-size: 1em;
+        text-align: left; /* Ensure left alignment on small screens too */
+    }
+
+    .course-entry {
+        padding: 8px;
+        gap: 3px;
+        font-size: 0.8em;
+    }
+
+    .course-entry .course-name {
+        font-size: 0.9em;
+    }
+
+    .course-entry .course-time {
+        font-size: 0.7em;
+    }
+
+    .notification-settings-section p {
+        font-size: 0.9em;
+    }
+
+    #request-notification-permission-btn {
+        font-size: 0.8em;
+        padding: 6px 12px;
+    }
+}

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Timetable - Student Hub</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <link rel="stylesheet" href="timetable_style.css">
+</head>
+<body>
+
+    <div class="background-gradient"></div>
+
+    <header>
+        <div class="header-content">
+            <div class="clock" id="current-time">
+                17:15 WAT
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="timetable-app-container">
+            <h1>Your Timetable</h1>
+            <p>Organize your classes and get reminders.</p>
+
+            <div class="timetable-input-section">
+                <h2>Add/Edit Courses</h2>
+                <div class="day-inputs">
+                    <div class="day-input-block" data-day="Monday">
+                        <h3>Monday</h3>
+                        <div class="courses-for-day">
+                            <div class="course-input-row">
+                                <input type="text" class="course-name" placeholder="Course Name">
+                                <input type="time" class="course-start-time">
+                                <input type="time" class="course-end-time">
+                                <button class="remove-course-btn">&times;</button>
+                            </div>
+                        </div>
+                        <button class="add-course-btn action-button small">+ Add Course</button>
+                    </div>
+                    <div class="day-input-block" data-day="Tuesday">
+                         <h3>Tuesday</h3>
+                         <div class="courses-for-day">
+                             <div class="course-input-row">
+                                 <input type="text" class="course-name" placeholder="Course Name">
+                                 <input type="time" class="course-start-time">
+                                 <input type="time" class="course-end-time">
+                                 <button class="remove-course-btn">&times;</button>
+                             </div>
+                         </div>
+                         <button class="add-course-btn action-button small">+ Add Course</button>
+                     </div>
+                     <div class="day-input-block" data-day="Wednesday">
+                         <h3>Wednesday</h3>
+                         <div class="courses-for-day">
+                             <div class="course-input-row">
+                                 <input type="text" class="course-name" placeholder="Course Name">
+                                 <input type="time" class="course-start-time">
+                                 <input type="time" class="course-end-time">
+                                 <button class="remove-course-btn">&times;</button>
+                             </div>
+                         </div>
+                         <button class="add-course-btn action-button small">+ Add Course</button>
+                     </div>
+                     <div class="day-input-block" data-day="Thursday">
+                         <h3>Thursday</h3>
+                         <div class="courses-for-day">
+                             <div class="course-input-row">
+                                 <input type="text" class="course-name" placeholder="Course Name">
+                                 <input type="time" class="course-start-time">
+                                 <input type="time" class="course-end-time">
+                                 <button class="remove-course-btn">&times;</button>
+                             </div>
+                         </div>
+                         <button class="add-course-btn action-button small">+ Add Course</button>
+                     </div>
+                     <div class="day-input-block" data-day="Friday">
+                         <h3>Friday</h3>
+                         <div class="courses-for-day">
+                             <div class="course-input-row">
+                                 <input type="text" class="course-name" placeholder="Course Name">
+                                 <input type="time" class="course-start-time">
+                                 <input type="time" class="course-end-time">
+                                 <button class="remove-course-btn">&times;</button>
+                             </div>
+                         </div>
+                         <button class="add-course-btn action-button small">+ Add Course</button>
+                     </div>
+                     <div class="day-input-block" data-day="Saturday">
+                         <h3>Saturday</h3>
+                         <div class="courses-for-day">
+                             <div class="course-input-row">
+                                 <input type="text" class="course-name" placeholder="Course Name">
+                                 <input type="time" class="course-start-time">
+                                 <input type="time" class="course-end-time">
+                                 <button class="remove-course-btn">&times;</button>
+                             </div>
+                         </div>
+                         <button class="add-course-btn action-button small">+ Add Course</button>
+                     </div>
+                     <div class="day-input-block" data-day="Sunday">
+                         <h3>Sunday</h3>
+                         <div class="courses-for-day">
+                             <div class="course-input-row">
+                                 <input type="text" class="course-name" placeholder="Course Name">
+                                 <input type="time" class="course-start-time">
+                                 <input type="time" class="course-end-time">
+                                 <button class="remove-course-btn">&times;</button>
+                             </div>
+                         </div>
+                         <button class="add-course-btn action-button small">+ Add Course</button>
+                     </div>
+                </div>
+                <button id="save-timetable-btn" class="action-button primary">Save Timetable</button>
+            </div>
+
+            <div class="timetable-display-section">
+                <h2>Your Schedule</h2>
+                <div id="timetable-display" class="timetable-grid">
+                    <p class="no-timetable-message">Timetable not set yet. Add courses above and save!</p>
+                </div>
+            </div>
+
+            <div class="notification-settings-section">
+                 <h2>Notifications</h2>
+                 <p>Get reminders for your classes. (Note: Notifications require browser permission and may only work when the app is open in this version.)</p>
+                 <button id="request-notification-permission-btn" class="action-button secondary small">Request Notification Permission</button>
+                 </div>
+
+        </section>
+    </main>
+
+    <audio id="notification-sound" src="notification.mp3" preload="auto"></audio>
+    <script src="timetable_script.js"></script>
+</body>
+</html>

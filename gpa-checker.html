@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GPA Calculator - Student Hub</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="gpa_style.css">
+</head>
+<body>
+
+    <div class="background-gradient"></div>
+
+    <header>
+        <div class="clock" id="current-time">
+            16:30 WAT
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="gpa-calculator-section">
+            <h1>GPA Calculator</h1>
+            <p>Calculate your semester's grade point average.</p>
+
+            <div id="courses-list">
+                <div class="course-input-row">
+                    <input type="text" class="course-name" placeholder="Course Name">
+                    <input type="number" class="course-credits" placeholder="Credits" min="1" value="3">
+                    <select class="course-grade">
+                        <option value="">Select Grade</option>
+                        <option value="4.0">A</option>
+                        <option value="3.7">A-</option>
+                        <option value="3.3">B+</option>
+                        <option value="3.0">B</option>
+                        <option value="2.7">B-</option>
+                        <option value="2.3">C+</option>
+                        <option value="2.0">C</option>
+                        <option value="1.7">C-</option>
+                        <option value="1.3">D+</option>
+                        <option value="1.0">D</option>
+                        <option value="0.0">F</option>
+                    </select>
+                    <button class="remove-course-btn">&times;</button>
+                </div>
+            </div>
+
+            <button id="add-course-btn" class="action-button">+ Add Course</button>
+
+            <div class="calculation-area">
+                <button id="calculate-gpa-btn" class="action-button primary">Calculate GPA</button>
+                <button id="reset-form-btn" class="action-button secondary">Reset</button>
+            </div>
+
+
+            <div id="results-area" class="results-area hidden">
+                <h2>Results</h2>
+                <p>Total Credits: <span id="total-credits">0</span></p>
+                <p>Total Grade Points: <span id="total-grade-points">0</span></p>
+                <h3 class="calculated-gpa">Calculated GPA: <span id="gpa-value">0.00</span></h3>
+                <button id="print-gpa-btn" class="action-button">Print GPA</button>
+            </div>
+        </section>
+    </main>
+
+    <script src="gpa_script.js"></script>
+</body>
+</html>

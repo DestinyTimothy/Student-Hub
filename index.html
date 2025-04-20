@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Student Hub</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="background-gradient"></div>
+
+    <header>
+        <div class="clock" id="current-time">
+            16:24 WAT
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="intro-section">
+            <h1 id="welcome-message">Welcome!</h1>
+            <p>Your all-in-one companion for academic success.</p>
+        </section>
+
+        <section class="tools-section">
+            <div class="card-grid">
+                <a href="gpa-checker.html" class="tool-card">
+                    <div class="icon-placeholder" style="background-color: #FF9500;">
+                        <i class="ph-fill ph-calculator"></i> </div>
+                    <h3>GPA Checker</h3>
+                    <p>Find your way around campus.</p>
+                </a>
+                <a href="notes.html" class="tool-card">
+                    <div class="icon-placeholder" style="background-color: #34C759;">
+                        <i class="ph-fill ph-notebook"></i> </div>
+                    <h3>Notes App</h3>
+                    <p>Capture and organize your thoughts.</p>
+                </a>
+                <a href="timetable.html" class="tool-card">
+                    <div class="icon-placeholder" style="background-color: #007AFF;"></div> <h3>Timetable</h3>
+                    <p>Stay on top of your schedule.</p>
+                </a>
+                <a href="todo_html.html" class="tool-card">
+                    <div class="icon-placeholder" style="background-color: #5856D6;"></div> <h3>School To-Do List</h3>
+                    <p>Manage assignments and tasks.</p>
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <div class="modal-overlay" id="name-modal">
+        <div class="modal-content">
+            <h2>Welcome! What's your name?</h2>
+            <input type="text" id="username-input" placeholder="Enter your name">
+            <button id="save-name-btn">Continue</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

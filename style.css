@@ -1,0 +1,222 @@
+:root {
+    --background-black: #0A0A0C;
+    --card-background: #1C1C1E;
+    --text-color-primary: #FFFFFF;
+    --text-color-secondary: #AEAEB2;
+    --border-color: #3A3A3C;
+    --gradient-purple: #5856d6; /* Indigo/Purple */
+    --gradient-blue: #007AFF; /* Blue */
+}
+
+body {
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+    background-color: var(--background-black);
+    color: var(--text-color-primary);
+    min-height: 100vh;
+    position: relative; /* Needed for gradient positioning */
+    padding-bottom: 50px; /* Add some padding at the bottom */
+    overflow-x: hidden; /* Prevent horizontal scroll */
+}
+
+.background-gradient {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at top left, var(--gradient-purple) 0%, transparent 25%),
+                radial-gradient(circle at bottom right, var(--gradient-blue) 0%, transparent 25%);
+    opacity: 0.15; /* Subtle gradient effect */
+    z-index: -1; /* Send to back */
+}
+
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+header {
+    padding: 20px;
+    display: flex;
+    justify-content: flex-end; /* Push clock to the right */
+    position: relative;
+    z-index: 10; /* Ensure clock is above gradient */
+}
+
+.clock {
+    font-size: 1rem;
+    color: var(--text-color-secondary);
+    background-color: rgba(28, 28, 30, 0.6); /* Slightly transparent background */
+    padding: 8px 15px;
+    border-radius: 20px;
+    backdrop-filter: blur(10px); /* Frosted glass effect */
+    -webkit-backdrop-filter: blur(10px); /* Safari support */
+}
+
+.intro-section {
+    text-align: center;
+    margin-top: 50px;
+    margin-bottom: 60px;
+    position: relative;
+    z-index: 5;
+}
+
+.intro-section h1 {
+    font-size: 3em;
+    font-weight: 700; /* Bold */
+    margin-bottom: 10px;
+}
+
+.intro-section p {
+    font-size: 1.2em;
+    color: var(--text-color-secondary);
+}
+
+.tools-section {
+     position: relative;
+     z-index: 5;
+}
+
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+.tool-card {
+    background-color: var(--card-background);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* Align content to the left */
+    text-decoration: none; /* Remove underline from link */
+    color: var(--text-color-primary);
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    overflow: hidden; /* Hide overflow for border-radius */
+    position: relative;
+}
+
+.tool-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 5px; /* Color strip at the top */
+    background-color: transparent; /* Default */
+    transition: background-color 0.2s ease-in-out;
+}
+
+.tool-card:nth-child(1)::before { background-color: #FF9500; } /* Orange */
+.tool-card:nth-child(2)::before { background-color: #34C759; } /* Green */
+.tool-card:nth-child(3)::before { background-color: #007AFF; } /* Blue */
+.tool-card:nth-child(4)::before { background-color: #5856D6; } /* Indigo/Purple */
+
+
+.tool-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.icon-placeholder {
+    width: 50px;
+    height: 50px;
+    border-radius: 10px; /* Slightly rounded icons */
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2em; /* For potential icon font */
+    color: white; /* Icon color */
+}
+
+.tool-card h3 {
+    font-size: 1.5em;
+    font-weight: 600;
+    margin: 0 0 8px 0;
+}
+
+.tool-card p {
+    font-size: 1em;
+    color: var(--text-color-secondary);
+    margin: 0;
+}
+
+/* Modal Styling */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8); /* Semi-transparent black background */
+    backdrop-filter: blur(15px); /* Blur the background */
+    -webkit-backdrop-filter: blur(15px); /* Safari support */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; /* Above everything else */
+    visibility: hidden; /* Hidden by default */
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+}
+
+.modal-overlay.visible {
+    visibility: visible;
+    opacity: 1;
+}
+
+.modal-content {
+    background-color: var(--card-background);
+    border-radius: 12px;
+    padding: 30px;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    max-width: 400px;
+    width: 90%; /* Make it responsive */
+    box-sizing: border-box;
+}
+
+.modal-content h2 {
+    font-size: 1.8em;
+    margin-top: 0;
+    margin-bottom: 20px;
+    color: var(--text-color-primary);
+}
+
+.modal-content input[type="text"] {
+    width: 100%;
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    background-color: #2C2C2E; /* Darker input field */
+    color: var(--text-color-primary);
+    font-size: 1em;
+    box-sizing: border-box; /* Include padding in width */
+}
+
+.modal-content input[type="text"]::placeholder {
+    color: var(--text-color-secondary);
+    opacity: 0.7;
+}
+
+.modal-content button {
+    background-color: var(--gradient-blue); /* Use a vibrant button color */
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 25px;
+    font-size: 1.1em;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.modal-content button:hover {
+    background-color: #0056b3; /* Darker shade on hover */
+}

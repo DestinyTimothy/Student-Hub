@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notes App - Student Hub</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <link rel="stylesheet" href="notes_style.css">
+</head>
+<body>
+
+    <div class="background-gradient"></div>
+
+    <header>
+        <div class="header-content">
+            <div class="clock" id="current-time">
+                17:00 WAT
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="notes-app-container">
+            <div class="note-editor-panel">
+                <div class="editor-actions">
+                     <button id="save-note-btn" class="action-button black-button small">
+                         <i class="ph-fill ph-floppy-disk"></i> Save
+                     </button>
+                     <button id="print-note-btn" class="action-button black-button small">
+                         <i class="ph-fill ph-printer"></i> Print
+                     </button>
+                </div>
+                <input type="text" id="note-title" class="note-title" placeholder="Note Title">
+                <div class="notebook-paper">
+                    <textarea id="note-content" class="note-content" placeholder="Start typing your note here..."></textarea>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <section class="bottom-notes-list-section">
+        <div class="bottom-notes-list-header">
+            <h2>Your Notes</h2>
+            <button id="new-note-btn" class="action-button primary small">+ New Note</button>
+        </div>
+        <div id="notes-list" class="horizontal-scroll-list">
+            <p class="no-notes-message">No notes yet. Click "+ New Note" to create one!</p>
+        </div>
+    </section>
+
+
+    <script src="notes_script.js"></script>
+</body>
+</html>

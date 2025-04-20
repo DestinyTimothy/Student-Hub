@@ -1,0 +1,417 @@
+/* Using the same color variables as the landing page */
+:root {
+    --background-black: #0A0A0C;
+    --card-background: #1C1C1E;
+    --text-color-primary: #FFFFFF;
+    --text-color-secondary: #AEAEB2;
+    --border-color: #3A3A3C;
+    --gradient-purple: #5856d6; /* Indigo/Purple */
+    --gradient-blue: #007AFF; /* Blue */
+    --button-primary: #007AFF;
+    --button-secondary: #3A3A3C;
+    --button-text: #FFFFFF;
+}
+
+body {
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+    background-color: var(--background-black);
+    color: var(--text-color-primary);
+    min-height: 100vh;
+    position: relative; /* Needed for gradient positioning */
+    padding-bottom: 50px; /* Add some padding at the bottom */
+    overflow-x: hidden; /* Prevent horizontal scroll */
+}
+
+.background-gradient {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at top left, var(--gradient-purple) 0%, transparent 25%),
+                radial-gradient(circle at bottom right, var(--gradient-blue) 0%, transparent 25%);
+    opacity: 0.15; /* Subtle gradient effect */
+    z-index: -1; /* Send to back */
+}
+
+.container {
+    max-width: 800px; /* Slightly narrower container for the form */
+    margin: 0 auto;
+    padding: 20px;
+    position: relative;
+    z-index: 5;
+}
+
+header {
+    padding: 20px;
+    display: flex;
+    justify-content: flex-end; /* Push clock to the right */
+    position: relative;
+    z-index: 10; /* Ensure clock is above gradient */
+}
+
+.clock {
+    font-size: 1rem;
+    color: var(--text-color-secondary);
+    background-color: rgba(28, 28, 30, 0.6); /* Slightly transparent background */
+    padding: 8px 15px;
+    border-radius: 20px;
+    backdrop-filter: blur(10px); /* Frosted glass effect */
+    -webkit-backdrop-filter: blur(10px); /* Safari support */
+}
+
+.gpa-calculator-section h1 {
+    font-size: 2.5em;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.gpa-calculator-section p {
+    font-size: 1.1em;
+    color: var(--text-color-secondary);
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.course-input-row {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1.5fr auto; /* Name, Credits, Grade, Remove Button */
+    gap: 15px;
+    margin-bottom: 15px;
+    align-items: center;
+    background-color: var(--card-background);
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    animation: fadeIn 0.3s ease-out; /* Animation for new rows */
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+
+.course-input-row input[type="text"],
+.course-input-row input[type="number"],
+.course-input-row select {
+    padding: 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    background-color: #2C2C2E;
+    color: var(--text-color-primary);
+    font-size: 1em;
+    box-sizing: border-box;
+    -webkit-appearance: none; /* Remove default select styling */
+    -moz-appearance: none;
+    appearance: none;
+    cursor: pointer;
+}
+
+.course-input-row input[type="number"] {
+    /* Hide default number input arrows */
+    -moz-appearance: textfield;
+}
+.course-input-row input[type="number"]::-webkit-outer-spin-button,
+.course-input-row input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+
+.course-input-row select {
+     background-image: url('data:image/svg+xml;utf8,<svg fill="%23AEAEB2" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>');
+     background-repeat: no-repeat;
+     background-position: right 10px center;
+     padding-right: 30px; /* Make space for the arrow */
+}
+
+
+.course-input-row input::placeholder {
+    color: var(--text-color-secondary);
+    opacity: 0.7;
+}
+
+.remove-course-btn {
+    background-color: #FF3B30; /* Red for remove */
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 10px 14px;
+    font-size: 1.2em;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+    line-height: 1; /* Center the 'x' */
+}
+
+.remove-course-btn:hover {
+    background-color: #CC0000;
+}
+
+#add-course-btn {
+    display: block; /* Make button full width */
+    width: 100%;
+    margin-top: 20px;
+    background-color: var(--button-secondary);
+    color: var(--button-text);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 15px 20px;
+    font-size: 1.1em;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out, transform 0.1s ease-in-out;
+}
+
+#add-course-btn:hover {
+    background-color: #4A4A4C;
+}
+
+#add-course-btn:active {
+    transform: scale(0.98); /* Simple press animation */
+}
+
+
+.calculation-area {
+    margin-top: 30px;
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+}
+
+.action-button {
+    border: none;
+    border-radius: 8px;
+    padding: 15px 30px;
+    font-size: 1.1em;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out, opacity 0.2s ease-in-out;
+    color: var(--button-text);
+}
+
+.action-button.primary {
+    background-color: var(--button-primary);
+}
+
+.action-button.primary:hover {
+    background-color: #0056b3;
+}
+
+.action-button.secondary {
+    background-color: var(--button-secondary);
+}
+
+.action-button.secondary:hover {
+     background-color: #4A4A4C;
+}
+
+
+.results-area {
+    margin-top: 40px;
+    background-color: var(--card-background);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 25px;
+    text-align: center;
+    animation: scaleIn 0.4s ease-out; /* Animation for results area */
+}
+
+@keyframes scaleIn {
+    from { opacity: 0; transform: scale(0.9); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+
+.results-area.hidden {
+    display: none; /* Hide results until calculated */
+}
+
+.results-area h2 {
+    font-size: 2em;
+    margin-top: 0;
+    margin-bottom: 15px;
+    color: var(--text-color-primary);
+}
+
+.results-area p {
+    font-size: 1.1em;
+    color: var(--text-color-secondary);
+    margin-bottom: 10px;
+}
+
+.results-area .calculated-gpa {
+    font-size: 2.5em;
+    color: #34C759; /* Green color for GPA */
+    margin-top: 20px;
+    margin-bottom: 20px;
+    font-weight: 700;
+}
+
+.results-area .calculated-gpa span {
+    font-size: 1.2em; /* Slightly larger GPA value */
+}
+
+#print-gpa-btn {
+    margin-top: 20px;
+    background-color: var(--button-primary); /* Use primary button style for print */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .container {
+        padding: 15px; /* Reduce padding on smaller screens */
+    }
+
+    header {
+        padding: 15px;
+    }
+
+    .clock {
+        font-size: 0.9rem; /* Slightly smaller clock font */
+        padding: 6px 12px;
+    }
+
+    .gpa-calculator-section h1 {
+        font-size: 2em; /* Smaller heading */
+    }
+
+    .gpa-calculator-section p {
+        font-size: 1em; /* Smaller paragraph text */
+        margin-bottom: 30px;
+    }
+
+    .course-input-row {
+        grid-template-columns: 1fr auto; /* Stack inputs, keep remove button */
+        gap: 10px;
+        padding: 10px;
+    }
+
+    .course-input-row input[type="text"],
+    .course-input-row input[type="number"],
+    .course-input-row select {
+        grid-column: span 2; /* Make inputs span both columns */
+        font-size: 0.9em; /* Smaller font in inputs */
+        padding: 10px;
+    }
+
+     .course-input-row input[type="number"] {
+         grid-column: span 1; /* Credits input takes one column */
+     }
+
+     .course-input-row select {
+         grid-column: span 1; /* Grade select takes one column */
+     }
+
+
+    .remove-course-btn {
+        padding: 8px 12px; /* Smaller remove button */
+        font-size: 1em;
+    }
+
+    .calculation-area {
+        flex-direction: column; /* Stack calculate and reset buttons */
+        gap: 10px;
+    }
+
+    .action-button {
+        width: 100%; /* Make buttons full width when stacked */
+        padding: 12px 20px;
+        font-size: 1em;
+    }
+
+    .results-area {
+        padding: 20px;
+    }
+
+    .results-area h2 {
+        font-size: 1.8em;
+    }
+
+    .results-area p {
+        font-size: 1em;
+    }
+
+    .results-area .calculated-gpa {
+        font-size: 2em;
+    }
+}
+
+
+/* Print Specific Styles */
+@media print {
+    body {
+        background: none; /* Remove background in print */
+        color: #000; /* Black text for print */
+        font-family: 'Inter', sans-serif; /* Use the same font */
+    }
+
+    .background-gradient, header, .calculation-area, #add-course-btn, #print-gpa-btn {
+        display: none; /* Hide elements not needed in print */
+    }
+
+    .container {
+        max-width: 100%;
+        padding: 0;
+        margin: 0;
+    }
+
+    .gpa-calculator-section {
+        margin-top: 0;
+    }
+
+    .gpa-calculator-section h1,
+    .gpa-calculator-section p {
+        text-align: left; /* Align text left in print */
+        color: #000;
+    }
+
+    .course-input-row {
+        display: grid;
+        grid-template-columns: 3fr 1fr 1.5fr; /* Adjust columns for print */
+        gap: 10px;
+        margin-bottom: 10px;
+        padding: 10px;
+        border: 1px solid #ccc; /* Lighter border for print */
+        background: none; /* Remove background */
+        page-break-inside: avoid; /* Avoid breaking rows across pages */
+    }
+
+    .course-input-row input,
+    .course-input-row select {
+        border: none; /* Remove input borders */
+        background: none;
+        color: #000;
+        padding: 0;
+        font-size: 1em;
+    }
+
+     .course-input-row select {
+         background-image: none; /* Remove dropdown arrow */
+         padding-right: 0;
+     }
+
+
+    .remove-course-btn {
+        display: none; /* Hide remove button in print */
+    }
+
+    .results-area {
+        margin-top: 30px;
+        border: 1px solid #ccc;
+        background: none;
+        padding: 20px;
+        text-align: left; /* Align results text left */
+    }
+
+    .results-area h2,
+    .results-area p,
+    .results-area .calculated-gpa {
+        color: #000;
+        text-align: left;
+    }
+
+    .results-area .calculated-gpa {
+        color: #000; /* Keep GPA color black for print clarity */
+    }
+}

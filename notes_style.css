@@ -1,0 +1,477 @@
+/* Using the same color variables as previous pages */
+:root {
+    --background-black: #0A0A0C;
+    --panel-background: #1C1C1E;
+    --text-color-primary: #FFFFFF;
+    --text-color-secondary: #AEAEB2;
+    --border-color: #3A3A3C;
+    --gradient-purple: #5856d6; /* Indigo/Purple */
+    --gradient-blue: #007AFF; /* Blue */
+    --button-primary: #007AFF;
+    --button-secondary: #3A3A3C;
+    --button-text: #FFFFFF;
+    --notebook-lines: #3A3A3C; /* Color for notebook lines */
+    --notebook-background: #2C2C2E; /* Slightly lighter dark for paper */
+    --bottom-list-background: #121214; /* Slightly darker background for the bottom bar */
+}
+
+body {
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+    background-color: var(--background-black);
+    color: var(--text-color-primary);
+    min-height: 100vh;
+    position: relative;
+    /* Add padding at the bottom to prevent content from being hidden by the fixed notes list */
+    padding-bottom: 180px; /* Adjust based on the height of the bottom section */
+    overflow-x: hidden;
+}
+
+.background-gradient {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at top left, var(--gradient-purple) 0%, transparent 25%),
+                radial-gradient(circle at bottom right, var(--gradient-blue) 0%, transparent 25%);
+    opacity: 0.15;
+    z-index: -1;
+}
+
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px;
+    position: relative;
+    z-index: 5;
+    min-height: calc(100vh - 100px - 180px); /* Adjust height considering header and bottom list */
+    display: flex;
+    flex-direction: column;
+}
+
+header {
+    padding: 20px;
+    display: flex;
+    justify-content: flex-end; /* Push header content to the right */
+    position: relative;
+    z-index: 10;
+}
+
+.header-content {
+    display: flex;
+    align-items: center;
+    /* No gap needed here anymore as only clock is here */
+}
+
+/* Removed .header-action-button styles as the button is moved */
+
+.clock {
+    font-size: 1rem;
+    color: var(--text-color-secondary);
+    background-color: rgba(28, 28, 30, 0.6);
+    padding: 8px 15px;
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+.notes-app-container {
+    display: flex;
+    width: 100%;
+    /* No gap or flex direction needed here anymore */
+}
+
+.note-editor-panel {
+    flex-grow: 1;
+    background-color: var(--panel-background);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.editor-actions {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    z-index: 10;
+    display: flex;
+    gap: 10px;
+}
+
+.action-button {
+    border: none;
+    border-radius: 8px;
+    padding: 15px 30px;
+    font-size: 1.1em;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out, opacity 0.2s ease-in-out;
+    color: var(--button-text);
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.action-button.primary {
+    background-color: var(--button-primary);
+}
+
+.action-button.primary:hover {
+    background-color: #0056b3;
+}
+
+.action-button.secondary {
+    background-color: var(--button-secondary);
+}
+
+.action-button.secondary:hover {
+     background-color: #4A4A4C;
+}
+
+.action-button.small {
+    padding: 8px 12px;
+    font-size: 0.9em;
+}
+
+/* New style for black buttons */
+.action-button.black-button {
+    background-color: var(--background-black); /* Use the main black background color */
+    color: var(--text-color-primary); /* White text/icon */
+    border: 1px solid var(--border-color); /* Add a subtle border */
+}
+
+.action-button.black-button:hover {
+    background-color: #1C1C1E; /* Slightly lighter black on hover */
+}
+
+
+.note-title {
+    width: calc(100% - 40px);
+    padding: 15px 20px;
+    margin-bottom: 15px;
+    margin-top: 50px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    background-color: #2C2C2E;
+    color: var(--text-color-primary);
+    font-size: 1.5em;
+    font-weight: 600;
+    box-sizing: border-box;
+    outline: none;
+}
+
+.note-title::placeholder {
+    color: var(--text-color-secondary);
+    opacity: 0.7;
+}
+
+.notebook-paper {
+    flex-grow: 1;
+    background-color: var(--notebook-background);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 20px;
+    position: relative;
+    overflow: hidden;
+    box-sizing: border-box;
+    background-image: linear-gradient(to bottom, var(--notebook-lines) 1px, transparent 1px);
+    background-size: 100% 25px;
+}
+
+.note-content {
+    width: 100%;
+    height: 100%;
+    border: none;
+    background: none;
+    color: var(--text-color-primary);
+    font-size: 1.1em;
+    line-height: 25px;
+    resize: none;
+    outline: none;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.note-content::placeholder {
+    color: var(--text-color-secondary);
+    opacity: 0.7;
+}
+
+/* Horizontal Notes List Section at the bottom */
+.bottom-notes-list-section {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: var(--bottom-list-background);
+    border-top: 1px solid var(--border-color);
+    padding: 15px 0; /* Padding top/bottom, no left/right */
+    z-index: 500; /* Above main content but below modals */
+    display: flex;
+    flex-direction: column;
+}
+
+.bottom-notes-list-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px 10px 20px; /* Padding left/right */
+}
+
+.bottom-notes-list-header h2 {
+    font-size: 1.2em;
+    margin: 0;
+    color: var(--text-color-primary);
+}
+
+.bottom-notes-list-header #new-note-btn {
+    margin: 0; /* Remove default button margin */
+}
+
+
+.horizontal-scroll-list {
+    display: flex; /* Arrange note items horizontally */
+    overflow-x: auto; /* Enable horizontal scrolling */
+    padding: 0 20px; /* Padding left/right for the scrollable area */
+    gap: 15px; /* Space between note items */
+    /* Hide scrollbar for aesthetic purposes (optional) */
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none;  /* Internet Explorer 10+ */
+}
+
+.horizontal-scroll-list::-webkit-scrollbar {
+    display: none; /* Safari and Chrome */
+}
+
+
+.bottom-notes-list-section .note-item {
+    flex: 0 0 200px; /* Prevent shrinking, prevent growing, set base width */
+    width: 200px; /* Explicit width */
+    height: 100px; /* Fixed height for consistent look */
+    background-color: #2C2C2E;
+    border: 1px solid #3A3A3C;
+    border-radius: 8px;
+    padding: 10px; /* Reduced padding for smaller items */
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out, transform 0.1s ease-in-out;
+    animation: fadeIn 0.3s ease-out;
+    display: flex; /* Use flex to arrange content inside item */
+    flex-direction: column;
+    justify-content: space-between; /* Space out title, preview, timestamp */
+    white-space: normal; /* Allow text to wrap within the item */
+}
+
+.bottom-notes-list-section .note-item:hover {
+    background-color: #3A3A3C;
+    transform: translateY(-2px);
+}
+
+.bottom-notes-list-section .note-item h3 {
+    font-size: 1em; /* Smaller title font */
+    margin: 0;
+    color: var(--text-color-primary);
+    font-weight: 600;
+    white-space: normal; /* Allow title wrapping */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 1; /* Limit title to 1 line */
+    -webkit-box-orient: vertical;
+}
+
+.bottom-notes-list-section .note-item p {
+    font-size: 0.8em; /* Smaller preview text */
+    color: var(--text-color-secondary);
+    margin: 5px 0;
+    white-space: normal; /* Allow preview wrapping */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* Limit preview to 2 lines */
+    -webkit-box-orient: vertical;
+}
+
+.bottom-notes-list-section .note-item .note-timestamp {
+    font-size: 0.7em; /* Smaller timestamp */
+    color: #8E8E93;
+    margin-top: auto; /* Push timestamp to the bottom */
+    display: block;
+    white-space: nowrap; /* Prevent timestamp wrapping */
+}
+
+.bottom-notes-list-section .no-notes-message {
+    text-align: center;
+    color: var(--text-color-secondary);
+    margin: auto; /* Center message vertically in the flex container */
+    white-space: normal; /* Allow message to wrap */
+}
+
+
+/* Removed modal styling */
+
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    body {
+        padding-bottom: 150px; /* Adjust padding for smaller bottom bar */
+    }
+    .container {
+        padding: 15px;
+        min-height: calc(100vh - 80px - 150px); /* Adjust height */
+    }
+
+    header {
+        padding: 15px;
+    }
+
+    .clock {
+        font-size: 0.9rem;
+        padding: 6px 12px;
+    }
+
+    .note-editor-panel {
+        padding: 15px;
+        padding-top: 60px;
+    }
+
+    .editor-actions {
+        top: 10px;
+        left: 10px;
+        right: 10px;
+        justify-content: center;
+        gap: 10px;
+    }
+
+    .action-button.small {
+        padding: 8px 12px;
+        font-size: 0.9em;
+    }
+
+    .note-title {
+         width: calc(100% - 30px);
+         padding: 12px 15px;
+         margin-top: 40px;
+         font-size: 1.3em;
+    }
+
+    .notebook-paper {
+        padding: 15px;
+    }
+
+    .note-content {
+        font-size: 1em;
+        line-height: 22px;
+        background-size: 100% 22px;
+    }
+
+    /* Bottom notes list responsive */
+    .bottom-notes-list-section {
+        padding: 10px 0; /* Reduce padding */
+    }
+
+    .bottom-notes-list-header {
+        padding: 0 15px 8px 15px; /* Reduce padding */
+    }
+
+    .bottom-notes-list-header h2 {
+        font-size: 1em; /* Smaller heading */
+    }
+
+    .bottom-notes-list-header #new-note-btn {
+         font-size: 0.8em;
+         padding: 5px 8px;
+    }
+
+    .horizontal-scroll-list {
+        padding: 0 15px; /* Reduce padding */
+        gap: 10px; /* Reduce gap */
+    }
+
+    .bottom-notes-list-section .note-item {
+        flex: 0 0 150px; /* Smaller item width */
+        width: 150px;
+        height: 90px; /* Smaller item height */
+        padding: 8px; /* Reduced padding */
+    }
+
+    .bottom-notes-list-section .note-item h3 {
+        font-size: 0.9em; /* Smaller title */
+    }
+
+    .bottom-notes-list-section .note-item p {
+        font-size: 0.7em; /* Smaller preview */
+    }
+
+    .bottom-notes-list-section .note-item .note-timestamp {
+        font-size: 0.6em; /* Smaller timestamp */
+    }
+}
+
+
+/* Print Specific Styles */
+@media print {
+    body {
+        background: none;
+        color: #000;
+        font-family: 'Inter', sans-serif;
+        padding-bottom: 0; /* Remove padding */
+    }
+
+    .background-gradient, header, .bottom-notes-list-section, .editor-actions {
+        display: none; /* Hide elements not needed in print */
+    }
+
+    .container {
+        max-width: 100%;
+        margin: 0;
+        padding: 0;
+        display: block;
+        min-height: auto;
+    }
+
+    .notes-app-container {
+         display: block;
+    }
+
+    .note-editor-panel {
+        flex: none;
+        width: 100%;
+        padding: 20px;
+        border: none;
+        background: none;
+        box-shadow: none;
+        page-break-after: auto;
+    }
+
+    .note-title {
+        width: 100%;
+        margin-top: 0;
+        margin-bottom: 20px;
+        border: none;
+        background: none;
+        color: #000;
+        font-size: 1.8em;
+        text-align: center;
+        padding: 0;
+    }
+
+    .notebook-paper {
+        border: none;
+        background: none;
+        padding: 0;
+        height: auto;
+    }
+
+    .note-content {
+        width: 100%;
+        height: auto;
+        color: #000;
+        line-height: 1.5;
+        white-space: pre-wrap;
+        word-wrap: break-word;
+        font-size: 1.1em;
+    }
+}

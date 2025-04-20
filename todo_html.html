@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List - Student Hub</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <link rel="stylesheet" href="todo_style.css">
+</head>
+<body>
+
+    <div class="background-gradient"></div>
+
+    <header>
+        <div class="header-content">
+            <div class="clock" id="current-time">
+                17:55 WAT
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="todo-app-container">
+            <h1>School To-Do List</h1>
+            <p>Manage your tasks and deadlines.</p>
+
+            <div class="task-input-section">
+                <h2>Add New Task</h2>
+                <input type="hidden" id="task-id"> <div class="input-grid">
+                    <input type="text" id="task-title" placeholder="Task Title" required>
+                    <textarea id="task-description" placeholder="Description (Optional)"></textarea>
+                    <input type="date" id="task-due-date">
+                    <input type="time" id="task-due-time">
+                    <select id="task-priority">
+                        <option value="low">Low Priority</option>
+                        <option value="medium" selected>Medium Priority</option>
+                        <option value="high">High Priority</option>
+                    </select>
+                    <div class="alarm-toggle">
+                        <input type="checkbox" id="task-alarm">
+                        <label for="task-alarm">Set Alarm</label>
+                         <button id="request-notification-permission-btn" class="action-button secondary small">
+                             <i class="ph-fill ph-bell"></i> Allow Notifications
+                         </button>
+                    </div>
+                </div>
+                <button id="add-task-btn" class="action-button primary">Add Task</button>
+                 <button id="update-task-btn" class="action-button primary hidden">Update Task</button>
+                 <button id="cancel-edit-btn" class="action-button secondary hidden">Cancel Edit</button>
+            </div>
+
+            <div class="task-list-section">
+                <h2>Your Tasks</h2>
+                 <div class="filter-sort-controls">
+                     <select id="filter-status">
+                         <option value="all">All Tasks</option>
+                         <option value="active">Active Tasks</option>
+                         <option value="completed">Completed Tasks</option>
+                     </select>
+                      <select id="sort-by">
+                         <option value="dueDate">Sort by Due Date</option>
+                         <option value="priority">Sort by Priority</option>
+                         <option value="creationDate">Sort by Creation Date</option>
+                     </select>
+                 </div>
+                <div id="task-list">
+                    <p class="no-tasks-message">No tasks yet. Add one above!</p>
+                </div>
+            </div>
+
+        </section>
+    </main>
+
+    <audio id="alarm-sound" src="notification.mp3" preload="auto"></audio>
+    <script src="todo_script.js"></script>
+</body>
+</html>
