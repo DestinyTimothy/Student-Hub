@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Chatbot - Student Hub</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <link rel="stylesheet" href="chatbot_style.css">
+</head>
+<body>
+
+    <div class="background-gradient"></div>
+
+    <header>
+        <div class="header-content">
+            <div class="clock" id="current-time">
+                --:-- WAT
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="chatbot-app-container">
+            <h1>Assignment Helper AI</h1>
+            <p>Get assistance with your academic questions.</p>
+
+            <div class="chat-window">
+                <div id="chat-box" class="chat-box">
+                    <div class="message ai-message">
+                        <div class="message-bubble">
+                            Hello! I'm your Assignment Helper AI. How can I assist you today?
+                        </div>
+                    </div>
+                    </div>
+                <div class="chat-input-area">
+                    <textarea id="user-input" placeholder="Ask a question about your assignment..."></textarea>
+                    <button id="send-button" class="action-button primary small">
+                        <i class="ph-fill ph-paper-plane-tilt"></i> Send
+                    </button>
+                </div>
+            </div>
+
+        </section>
+    </main>
+
+    <script src="chatbot_script.js"></script>
+</body>
+</html>

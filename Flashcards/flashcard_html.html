@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flashcards - Student Hub</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <link rel="stylesheet" href="flashcard_style.css">
+</head>
+<body>
+
+    <div class="background-gradient"></div>
+
+    <header>
+        <div class="header-content">
+            <div class="clock" id="current-time">
+                --:-- WAT
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="flashcard-app-container">
+            <h1>Flashcard Study Tool</h1>
+            <p>Create and study flashcards for your subjects.</p>
+
+            <div class="flashcard-creator-section">
+                <h2>Create New Card</h2>
+                <input type="hidden" id="edit-card-id"> <div class="input-grid">
+                    <textarea id="card-front-input" placeholder="Front of the card (e.g., Term or Question)"></textarea>
+                    <textarea id="card-back-input" placeholder="Back of the card (e.g., Definition or Answer)"></textarea>
+                </div>
+                <button id="save-card-btn" class="action-button primary">Save Card</button>
+                 <button id="update-card-btn" class="action-button primary hidden">Update Card</button>
+                 <button id="cancel-edit-btn" class="action-button secondary hidden">Cancel Edit</button>
+            </div>
+
+            <div class="flashcard-study-section">
+                <h2>Study Your Cards</h2>
+                <div id="flashcard-container" class="flashcard-container">
+                    <div id="flashcard" class="flashcard">
+                        <div class="flashcard-inner">
+                            <div class="flashcard-front">
+                                <p id="card-front-display">Card Front</p>
+                                <div class="card-actions-top">
+                                    <button class="edit-card-btn"><i class="ph-fill ph-pencil-simple"></i></button>
+                                    <button class="delete-card-btn"><i class="ph-fill ph-trash"></i></button>
+                                </div>
+                            </div>
+                            <div class="flashcard-back">
+                                <p id="card-back-display">Card Back</p>
+                                <div class="card-actions-top">
+                                     <button class="edit-card-btn"><i class="ph-fill ph-pencil-simple"></i></button>
+                                     <button class="delete-card-btn"><i class="ph-fill ph-trash"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                     <p id="no-cards-message" class="no-cards-message">No cards yet. Create one above!</p>
+                </div>
+
+                <div class="navigation-controls hidden">
+                     <button id="prev-card-btn" class="action-button secondary small"><i class="ph-fill ph-caret-left"></i> Prev</button>
+                     <span id="card-counter">0 / 0</span>
+                     <button id="next-card-btn" class="action-button secondary small">Next <i class="ph-fill ph-caret-right"></i></button>
+                </div>
+            </div>
+
+        </section>
+    </main>
+
+    <script src="flashcard_script.js"></script>
+</body>
+</html>
