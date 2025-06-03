@@ -1,72 +1,87 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const nameModal = document.getElementById('name-modal');
-    const usernameInput = document.getElementById('username-input');
-    const saveNameBtn = document.getElementById('save-name-btn');
-    const welcomeMessage = document.getElementById('welcome-message');
-    const currentTimeElement = document.getElementById('current-time'); // Added for clarity
+       document.addEventListener('DOMContentLoaded', () => {
+            const nameModal = document.getElementById('name-modal');
+            const usernameInput = document.getElementById('username-input');
+            const saveNameBtn = document.getElementById('save-name-btn');
+            const welcomeMessage = document.getElementById('welcome-message');
+            const currentTimeElement = document.getElementById('current-time');
+            const inputMessageBox = document.getElementById('input-message-box');
 
-    // --- Name Prompt Logic ---
+            /**
+             * Displays a temporary message in a dedicated message box.
+             * @param {string} message - The message to display.
+             * @param {string} type - 'success' or 'error' (can be extended for different styles).
+             */
+            function showMessageBox(message, type = 'error') {
+                inputMessageBox.textContent = message;
+                inputMessageBox.className = 'message-box show'; // Reset class and show
+                // Optionally change background based on type
+                if (type === 'error') {
+                    inputMessageBox.style.backgroundColor = '#FF4500'; // Red-orange for error
+                } else {
+                    inputMessageBox.style.backgroundColor = '#34C759'; // Green for success
+                }
 
-    const savedUsername = localStorage.getItem('studentUsername');
+                setTimeout(() => {
+                    inputMessageBox.classList.remove('show');
+                }, 3000); // Hide after 3 seconds
+            }
 
-    if (savedUsername) {
-        // If name is saved, display welcome message
-        welcomeMessage.textContent = `Welcome, ${savedUsername}!`;
-        // Hide the modal (just in case, though it should be hidden by default CSS)
-        nameModal.classList.remove('visible');
-    } else {
-        // If no name is saved, show the modal
-        nameModal.classList.add('visible');
-    }
+            // --- Name Prompt Logic ---
+            const savedUsername = localStorage.getItem('studentUsername');
 
-    saveNameBtn.addEventListener('click', () => {
-        const username = usernameInput.value.trim();
+            if (savedUsername) {
+                // If name is saved, display welcome message
+                welcomeMessage.textContent = `Welcome, ${savedUsername}!`;
+                nameModal.classList.remove('visible'); // Ensure modal is hidden
+            } else {
+                // If no name is saved, show the modal
+                nameModal.classList.add('visible');
+            }
 
-        if (username) {
-            // Save the name to local storage
-            localStorage.setItem('studentUsername', username);
+            saveNameBtn.addEventListener('click', () => {
+                const username = usernameInput.value.trim();
 
-            // Update the welcome message
-            welcomeMessage.textContent = `Welcome, ${username}!`;
+                if (username) {
+                    // Save the name to local storage
+                    localStorage.setItem('studentUsername', username);
 
-            // Hide the modal with a slight delay for a smoother transition
-            nameModal.classList.remove('visible');
-             // Optional: Add a slight delay before hiding to allow transition
-             // setTimeout(() => { nameModal.style.display = 'none'; }, 300); // If not using visibility transition
-        } else {
-            // Optionally, show a message asking for input
-            alert('Please enter your name.');
-        }
-    });
+                    // Update the welcome message
+                    welcomeMessage.textContent = `Welcome, ${username}!`;
 
-    // --- Clock Logic (Conceptual) ---
-    // Note: A truly live clock requires updating this every second.
-    // This is a conceptual outline using the time you provided.
-    // For a real app, you would use setInterval to update this.
+                    // Hide the modal with a smooth transition
+                    nameModal.classList.remove('visible');
+                } else {
+                    // Show a message asking for input using the custom message box
+                    showMessageBox('Please enter your name.');
+                }
+            });
 
-    function updateClock() {
-        // In a real app, get current time in Nigeria (WAT)
-        // This requires using Date objects and potentially timezone libraries
-        // For this static example, we'll use the provided time: 16:24 WAT
-        const currentTime = "16:24 WAT"; // Replace with dynamic time in a real app
-        currentTimeElement.textContent = currentTime;
+            // --- Clock Logic ---
+            /**
+             * Updates the clock display with the current time in WAT (West Africa Time).
+             */
+            function updateClock() {
+                const now = new Date();
 
-         // In a real app, you would use:
-         /*
-         const now = new Date();
-         // Need logic here to format time and handle WAT timezone
-         // Example (basic local time):
-         // const hours = now.getHours().toString().padStart(2, '0');
-         // const minutes = now.getMinutes().toString().padStart(2, '0');
-         // currentTimeElement.textContent = `${hours}:${minutes}`;
-         */
-    }
+                // Options for formatting the time, including the timezone
+                const options = {
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    // second: '2-digit', // Uncomment if seconds are desired
+                    hour12: false, // 24-hour format
+                    timeZone: 'Africa/Lagos' // Lagos is a common city in WAT
+                };
 
-    // Initial call to set the clock text
-    updateClock();
+                // Format the time
+                const formattedTime = new Intl.DateTimeFormat('en-US', options).format(now);
 
-    // In a real app, update the clock every second:
-    // setInterval(updateClock, 1000);
+                // Append the timezone abbreviation
+                currentTimeElement.textContent = `${formattedTime} WAT`;
+            }
 
-    // --- Add any other JavaScript for tool links or future features here ---
-});
+            // Initial call to set the clock text immediately
+            updateClock();
+
+            // Update the clock every second
+            setInterval(updateClock, 1000); // 1000 milliseconds = 1 second
+        });

@@ -3,74 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Flashcards - Student Hub</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <title>Flashcard Creator</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
     <link rel="stylesheet" href="flashcard_style.css">
+
 </head>
-<body>
+<body class="bg-black text-white">
+    <div class="container">
+        <div class="panel">
+            <h2 class="text-2xl font-bold mb-4 text-center">Create New Flashcard</h2>
+            <div class="mb-4">
+                <label for="flashcard-front" class="block text-sm font-medium mb-2 text-color-secondary">Front (Question/Term)</label>
+                <textarea id="flashcard-front" rows="3" placeholder="Enter the front content of your flashcard..."></textarea>
+            </div>
+            <div class="mb-6">
+                <label for="flashcard-back" class="block text-sm font-medium mb-2 text-color-secondary">Back (Answer/Definition)</label>
+                <textarea id="flashcard-back" rows="3" placeholder="Enter the back content of your flashcard..."></textarea>
+            </div>
+            <button id="create-flashcard-btn" class="btn btn-primary w-full">
+                <i class="ph-bold ph-plus-circle text-lg"></i>
+                Create Flashcard
+            </button>
+        </div>
 
-    <div class="background-gradient"></div>
+        <div class="panel">
+            <h2 class="text-2xl font-bold mb-4 text-center">Your Flashcards</h2>
+            <div id="flashcards-display" class="flashcard-grid">
+                </div>
+            <p id="no-flashcards-message" class="text-center text-color-secondary mt-4">No flashcards created yet. Start by adding one above!</p>
+        </div>
+    </div>
 
-    <header>
-        <div class="header-content">
-            <div class="clock" id="current-time">
-                --:-- WAT
+    <div id="custom-modal-overlay" class="modal-overlay">
+        <div class="modal-content">
+            <h3 id="modal-title"></h3>
+            <p id="modal-message"></p>
+            <div class="modal-buttons">
+                <button id="modal-confirm-btn" class="btn btn-destructive hidden">Confirm</button>
+                <button id="modal-cancel-btn" class="btn btn-secondary hidden">Cancel</button>
+                <button id="modal-ok-btn" class="btn btn-primary hidden">OK</button>
             </div>
         </div>
-    </header>
-
-    <main class="container">
-        <section class="flashcard-app-container">
-            <h1>Flashcard Study Tool</h1>
-            <p>Create and study flashcards for your subjects.</p>
-
-            <div class="flashcard-creator-section">
-                <h2>Create New Card</h2>
-                <input type="hidden" id="edit-card-id"> <div class="input-grid">
-                    <textarea id="card-front-input" placeholder="Front of the card (e.g., Term or Question)"></textarea>
-                    <textarea id="card-back-input" placeholder="Back of the card (e.g., Definition or Answer)"></textarea>
-                </div>
-                <button id="save-card-btn" class="action-button primary">Save Card</button>
-                 <button id="update-card-btn" class="action-button primary hidden">Update Card</button>
-                 <button id="cancel-edit-btn" class="action-button secondary hidden">Cancel Edit</button>
-            </div>
-
-            <div class="flashcard-study-section">
-                <h2>Study Your Cards</h2>
-                <div id="flashcard-container" class="flashcard-container">
-                    <div id="flashcard" class="flashcard">
-                        <div class="flashcard-inner">
-                            <div class="flashcard-front">
-                                <p id="card-front-display">Card Front</p>
-                                <div class="card-actions-top">
-                                    <button class="edit-card-btn"><i class="ph-fill ph-pencil-simple"></i></button>
-                                    <button class="delete-card-btn"><i class="ph-fill ph-trash"></i></button>
-                                </div>
-                            </div>
-                            <div class="flashcard-back">
-                                <p id="card-back-display">Card Back</p>
-                                <div class="card-actions-top">
-                                     <button class="edit-card-btn"><i class="ph-fill ph-pencil-simple"></i></button>
-                                     <button class="delete-card-btn"><i class="ph-fill ph-trash"></i></button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                     <p id="no-cards-message" class="no-cards-message">No cards yet. Create one above!</p>
-                </div>
-
-                <div class="navigation-controls hidden">
-                     <button id="prev-card-btn" class="action-button secondary small"><i class="ph-fill ph-caret-left"></i> Prev</button>
-                     <span id="card-counter">0 / 0</span>
-                     <button id="next-card-btn" class="action-button secondary small">Next <i class="ph-fill ph-caret-right"></i></button>
-                </div>
-            </div>
-
-        </section>
-    </main>
+    </div>
 
     <script src="flashcard_script.js"></script>
 </body>

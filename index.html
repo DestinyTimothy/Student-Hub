@@ -7,7 +7,9 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/@phosphor-icons/web@2.1.1/dist/phosphor.js"></script>
     <link rel="stylesheet" href="style.css">
+    
 </head>
 <body>
 
@@ -15,7 +17,7 @@
 
     <header>
         <div class="clock" id="current-time">
-            16:24 WAT
+            Loading time...
         </div>
     </header>
 
@@ -27,37 +29,43 @@
 
         <section class="tools-section">
             <div class="card-grid">
-                <a href="gpa-checker.html" class="tool-card">
+                <a href="GPA Checker/gpa-checker.html" class="tool-card">
                     <div class="icon-placeholder" style="background-color: #FF9500;">
-                        <i class="ph-fill ph-calculator"></i> </div>
+                        <i class="ph-fill ph-calculator"></i>
+                    </div>
                     <h3>GPA Checker</h3>
-                    <p>Find your way around campus.</p>
+                    <p>Calculate your academic performance.</p>
                 </a>
-                <a href="notes.html" class="tool-card">
+                <a href="Notes/notes.html" class="tool-card">
                     <div class="icon-placeholder" style="background-color: #34C759;">
-                        <i class="ph-fill ph-notebook"></i> </div>
+                        <i class="ph-fill ph-notebook"></i>
+                    </div>
                     <h3>Notes App</h3>
                     <p>Capture and organize your thoughts.</p>
                 </a>
-                <a href="timetable.html" class="tool-card">
-                    <div class="icon-placeholder" style="background-color: #007AFF;"></div> <h3>Timetable</h3>
+                <a href="Timetable/timetable.html" class="tool-card">
+                    <div class="icon-placeholder" style="background-color: #007AFF;">
+                        <i class="ph-fill ph-calendar-blank"></i> </div>
+                    <h3>Timetable</h3>
                     <p>Stay on top of your schedule.</p>
                 </a>
-                <a href="todo_html.html" class="tool-card">
-                    <div class="icon-placeholder" style="background-color: #5856D6;"></div> <h3>School To-Do List</h3>
+                <a href="To-do list/todo_html.html" class="tool-card">
+                    <div class="icon-placeholder" style="background-color: #5856D6;">
+                        <i class="ph-fill ph-check-square"></i> </div>
+                    <h3>School To-Do List</h3>
                     <p>Manage assignments and tasks.</p>
                 </a>
                 <a href="AI Chatbot/chatbot_html.html" class="tool-card">
-                    <div class="icon-placeholder" style="background-color: rgb(153, 0, 255);">
-                        <i class="ph-fill ph-calculator"></i> </div>
-                    <h3>AI Assignment assistance</h3>
+                    <div class="icon-placeholder" style="background-color: #9900FF;">
+                        <i class="ph-fill ph-robot"></i> </div>
+                    <h3>AI Assignment Assistance</h3>
                     <p>Get help on your assignments.</p>
                 </a>
                 <a href="Flashcards/flashcard_html.html" class="tool-card">
-                    <div class="icon-placeholder" style="background-color: rgb(153, 0, 255);">
-                        <i class="ph-fill ph-calculator"></i> </div>
+                    <div class="icon-placeholder" style="background-color: #FF2D55;">
+                        <i class="ph-fill ph-cards"></i> </div>
                     <h3>Flashcard Creator</h3>
-                    <p>Study better and faster with custom flashcards</p>
+                    <p>Study better and faster with custom flashcards.</p>
                 </a>
             </div>
         </section>
@@ -68,6 +76,7 @@
             <h2>Welcome! What's your name?</h2>
             <input type="text" id="username-input" placeholder="Enter your name">
             <button id="save-name-btn">Continue</button>
+            <div class="message-box" id="input-message-box"></div>
         </div>
     </div>
 

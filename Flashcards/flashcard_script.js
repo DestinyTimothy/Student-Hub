@@ -1,266 +1,265 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const cardFrontInput = document.getElementById('card-front-input');
-    const cardBackInput = document.getElementById('card-back-input');
-    const saveCardBtn = document.getElementById('save-card-btn');
-    const updateCardBtn = document.getElementById('update-card-btn');
-    const cancelEditBtn = document.getElementById('cancel-edit-btn');
-    const editCardIdInput = document.getElementById('edit-card-id'); // Hidden input
-    const flashcardContainer = document.getElementById('flashcard-container');
-    const flashcard = document.getElementById('flashcard');
-    const cardFrontDisplay = document.getElementById('card-front-display');
-    const cardBackDisplay = document.getElementById('card-back-display');
-    const navigationControls = document.querySelector('.navigation-controls');
-    const prevCardBtn = document.getElementById('prev-card-btn');
-    const nextCardBtn = document.getElementById('next-card-btn');
-    const cardCounterSpan = document.getElementById('card-counter');
-    const noCardsMessage = document.getElementById('no-cards-message');
-    const currentTimeElement = document.getElementById('current-time');
+        // Get references to DOM elements
+        const flashcardFrontInput = document.getElementById('flashcard-front');
+        const flashcardBackInput = document.getElementById('flashcard-back');
+        const createFlashcardBtn = document.getElementById('create-flashcard-btn');
+        const flashcardsDisplay = document.getElementById('flashcards-display');
+        const noFlashcardsMessage = document.getElementById('no-flashcards-message');
 
-    let flashcards = []; // Array to store flashcards
-    let currentCardIndex = 0; // Index of the currently displayed card
+        // Modal elements
+        const customModalOverlay = document.getElementById('custom-modal-overlay');
+        const modalTitle = document.getElementById('modal-title');
+        const modalMessage = document.getElementById('modal-message');
+        const modalConfirmBtn = document.getElementById('modal-confirm-btn');
+        const modalCancelBtn = document.getElementById('modal-cancel-btn');
+        const modalOkBtn = document.getElementById('modal-ok-btn');
 
-    // --- Live Clock Logic ---
-    function updateClock() {
-        const now = new Date();
-        const options = {
-            hour: '2-digit',
-            minute: '2-digit',
-            hour12: false, // Use 24-hour format
-            timeZone: 'Africa/Lagos' // Specify the timezone for WAT
-        };
-        try {
-             const formattedTime = now.toLocaleTimeString('en-US', options);
-             currentTimeElement.textContent = `${formattedTime} WAT`;
-        } catch (error) {
-             console.error("Error getting time in Africa/Lagos timezone, falling back to UTC:", error);
-             const utcOptions = {
-                  hour: '2-digit',
-                  minute: '2-digit',
-                  hour12: false,
-                  timeZone: 'UTC'
-             };
-             const utcTime = now.toLocaleTimeString('en-US', utcOptions);
-             currentTimeElement.textContent = `${utcTime} UTC`;
-        }
-    }
-    setInterval(updateClock, 1000);
-    updateClock(); // Initial call
+        // Array to store flashcard data
+        let flashcards = [];
 
-
-    // --- Flashcard Data Management ---
-
-    // Load flashcards from local storage
-    function loadFlashcards() {
-        const storedFlashcards = localStorage.getItem('studentFlashcards');
-        if (storedFlashcards) {
-            flashcards = JSON.parse(storedFlashcards);
-        } else {
-            flashcards = [];
-        }
-        displayCurrentCard(); // Display the first card on load
-        updateNavigation(); // Update navigation state
-    }
-
-    // Save flashcards to local storage
-    function saveFlashcards() {
-        localStorage.setItem('studentFlashcards', JSON.stringify(flashcards));
-        displayCurrentCard(); // Update display after saving
-        updateNavigation(); // Update navigation state
-    }
-
-    // Add or Update a flashcard
-    function addOrUpdateCard() {
-        const front = cardFrontInput.value.trim();
-        const back = cardBackInput.value.trim();
-        const cardId = editCardIdInput.value;
-
-        if (!front || !back) {
-            alert("Both front and back of the card are required.");
-            return;
-        }
-
-        const cardColors = [ // Define colors here to use in JS
-            'var(--card-color-1)',
-            'var(--card-color-2)',
-            'var(--card-color-3)',
-            'var(--card-color-4)',
-            'var(--card-color-5)',
-            'var(--card-color-6)',
-            'var(--card-color-7)'
+        // Array of available card colors (CSS variable names)
+        const cardColors = [
+            'card-color-1', 'card-color-2', 'card-color-3', 'card-color-4',
+            'card-color-5', 'card-color-6', 'card-color-7'
         ];
+        let currentColorIndex = 0; // To cycle through colors
 
-        if (cardId) {
-            // Update existing card
-            flashcards = flashcards.map(card => {
-                if (card.id === parseFloat(cardId)) {
-                    return { ...card, front: front, back: back }; // Keep existing color
-                }
-                return card;
-            });
-             alert("Card updated!");
-        } else {
-            // Add new card
-            const newCard = {
-                id: Date.now(), // Simple unique ID
-                front: front,
-                back: back,
-                 // Assign a color based on the current number of cards
-                color: cardColors[flashcards.length % cardColors.length]
-            };
-            flashcards.push(newCard);
-            currentCardIndex = flashcards.length - 1; // Go to the new card
-             alert("Card saved!");
+        // --- Utility Functions ---
+
+        /**
+         * Generates a unique ID for a flashcard.
+         * @returns {string} A unique identifier.
+         */
+        function generateUniqueId() {
+            return 'flashcard-' + Date.now() + '-' + Math.random().toString(36).substr(2, 9);
         }
 
-        saveFlashcards();
-        clearForm();
-        exitEditMode();
-    }
+        /**
+         * Saves the current flashcards array to localStorage.
+         */
+        function saveFlashcards() {
+            try {
+                localStorage.setItem('flashcards', JSON.stringify(flashcards));
+            } catch (e) {
+                console.error("Error saving flashcards to localStorage:", e);
+                showModal('Error', 'Could not save flashcards. Your browser might be in private mode or storage is full.', 'alert');
+            }
+        }
 
-    // Delete a flashcard
-    function deleteCard(idToDelete) {
-        if (confirm("Are you sure you want to delete this flashcard?")) {
-            flashcards = flashcards.filter(card => card.id !== idToDelete);
+        /**
+         * Loads flashcards from localStorage.
+         */
+        function loadFlashcards() {
+            try {
+                const storedFlashcards = localStorage.getItem('flashcards');
+                if (storedFlashcards) {
+                    flashcards = JSON.parse(storedFlashcards);
+                    renderAllFlashcards();
+                }
+            } catch (e) {
+                console.error("Error loading flashcards from localStorage:", e);
+                showModal('Error', 'Could not load saved flashcards. The data might be corrupted.', 'alert');
+                flashcards = []; // Reset if corrupted
+            }
+        }
 
-            // Adjust current index if the deleted card was the current one or before it
-            if (currentCardIndex >= flashcards.length) {
-                currentCardIndex = Math.max(0, flashcards.length - 1);
+        /**
+         * Shows a custom modal with a message and type (alert or confirm).
+         * @param {string} title - The title of the modal.
+         * @param {string} message - The message to display.
+         * @param {'alert'|'confirm'} type - The type of modal (shows OK or Confirm/Cancel buttons).
+         * @returns {Promise<boolean>} Resolves to true for 'confirm' if confirmed, false if cancelled. For 'alert', resolves to true when OK is clicked.
+         */
+        function showModal(title, message, type) {
+            return new Promise((resolve) => {
+                modalTitle.textContent = title;
+                modalMessage.textContent = message;
+
+                // Reset button visibility
+                modalConfirmBtn.classList.add('hidden');
+                modalCancelBtn.classList.add('hidden');
+                modalOkBtn.classList.add('hidden');
+
+                // Clear previous listeners
+                modalConfirmBtn.onclick = null;
+                modalCancelBtn.onclick = null;
+                modalOkBtn.onclick = null;
+
+                if (type === 'alert') {
+                    modalOkBtn.classList.remove('hidden');
+                    modalOkBtn.onclick = () => {
+                        customModalOverlay.classList.remove('visible');
+                        resolve(true);
+                    };
+                } else if (type === 'confirm') {
+                    modalConfirmBtn.classList.remove('hidden');
+                    modalCancelBtn.classList.remove('hidden');
+
+                    modalConfirmBtn.onclick = () => {
+                        customModalOverlay.classList.remove('visible');
+                        resolve(true);
+                    };
+                    modalCancelBtn.onclick = () => {
+                        customModalOverlay.classList.remove('visible');
+                        resolve(false);
+                    };
+                }
+
+                customModalOverlay.classList.add('visible');
+            });
+        }
+
+        // --- Flashcard Rendering and Management ---
+
+        /**
+         * Renders all flashcards currently in the 'flashcards' array.
+         */
+        function renderAllFlashcards() {
+            flashcardsDisplay.innerHTML = ''; // Clear existing cards
+            if (flashcards.length === 0) {
+                noFlashcardsMessage.classList.remove('hidden');
+            } else {
+                noFlashcardsMessage.classList.add('hidden');
+                // Render in reverse to show newest first, but maintain original order in array
+                [...flashcards].reverse().forEach(cardData => {
+                    const cardElement = createFlashcardElement(cardData);
+                    flashcardsDisplay.appendChild(cardElement);
+                });
+            }
+        }
+
+        /**
+         * Creates a single flashcard DOM element.
+         * @param {object} flashcardData - The data for the flashcard (id, front, back, colorClass).
+         * @returns {HTMLElement} The created flashcard DOM element.
+         */
+        function createFlashcardElement(flashcardData) {
+            const flashcardContainer = document.createElement('div');
+            flashcardContainer.classList.add('flashcard-container');
+            flashcardContainer.id = flashcardData.id; // Set ID on the container
+
+            const flashcard = document.createElement('div');
+            flashcard.classList.add('flashcard', flashcardData.colorClass);
+
+            const flashcardFront = document.createElement('div');
+            flashcardFront.classList.add('flashcard-front');
+            flashcardFront.textContent = flashcardData.front;
+
+            const flashcardBack = document.createElement('div');
+            flashcardBack.classList.add('flashcard-back');
+            flashcardBack.textContent = flashcardData.back;
+
+            // Delete button
+            const deleteButton = document.createElement('button');
+            deleteButton.classList.add('delete-card-btn');
+            deleteButton.innerHTML = '<i class="ph-bold ph-x-circle text-xl"></i>';
+            deleteButton.title = 'Delete Flashcard';
+            deleteButton.addEventListener('click', (event) => {
+                event.stopPropagation(); // Prevent card from flipping when delete button is clicked
+                confirmDeleteFlashcard(flashcardData.id);
+            });
+
+            // Append front, back, and delete button to the flashcard
+            flashcard.appendChild(flashcardFront);
+            flashcard.appendChild(flashcardBack);
+            flashcard.appendChild(deleteButton);
+
+
+            // Add click listener to flip the card
+            flashcard.addEventListener('click', () => {
+                flashcard.classList.toggle('flipped');
+            });
+
+            // Append the flashcard to its container
+            flashcardContainer.appendChild(flashcard);
+
+            return flashcardContainer;
+        }
+
+        /**
+         * Adds a new flashcard to the display and saves it.
+         */
+        function addFlashcard() {
+            const frontContent = flashcardFrontInput.value.trim();
+            const backContent = flashcardBackInput.value.trim();
+
+            if (frontContent === '' || backContent === '') {
+                showModal('Missing Content', 'Please enter content for both the front and back of the flashcard.', 'alert');
+                return;
             }
 
-            saveFlashcards();
-            displayCurrentCard(); // Update display
-            updateNavigation(); // Update navigation state
-             alert("Card deleted!");
+            // Get the next color class from the array, cycling through
+            const colorClass = cardColors[currentColorIndex];
+            currentColorIndex = (currentColorIndex + 1) % cardColors.length;
+
+            const newFlashcard = {
+                id: generateUniqueId(),
+                front: frontContent,
+                back: backContent,
+                colorClass: colorClass
+            };
+
+            flashcards.push(newFlashcard); // Add to the array
+            saveFlashcards(); // Save to localStorage
+
+            const flashcardElement = createFlashcardElement(newFlashcard);
+            flashcardsDisplay.prepend(flashcardElement); // Add to display (prepend to show newest first)
+
+            // Clear input fields
+            flashcardFrontInput.value = '';
+            flashcardBackInput.value = '';
+
+            // Hide "No flashcards" message if cards are present
+            if (flashcards.length > 0) {
+                noFlashcardsMessage.classList.add('hidden');
+            }
         }
-    }
 
-    // --- Flashcard Display and Navigation ---
-
-    // Display the current flashcard
-    function displayCurrentCard() {
-        if (flashcards.length === 0) {
-            flashcard.classList.add('hidden');
-            noCardsMessage.classList.remove('hidden');
-            navigationControls.classList.add('hidden');
-        } else {
-            flashcard.classList.remove('hidden');
-            noCardsMessage.classList.add('hidden');
-            navigationControls.classList.remove('hidden');
-
-            const currentCard = flashcards[currentCardIndex];
-            cardFrontDisplay.textContent = currentCard.front;
-            cardBackDisplay.textContent = currentCard.back;
-
-            // Apply the card color to BOTH the front and the back
-            flashcard.querySelector('.flashcard-front').style.backgroundColor = currentCard.color;
-            flashcard.querySelector('.flashcard-back').style.backgroundColor = currentCard.color; // <-- Fix applied here
-
-            // Ensure the card is showing the front side initially when displayed
-            flashcard.classList.remove('flipped');
-
-            updateNavigation(); // Update navigation state and counter
+        /**
+         * Confirms with the user before deleting a flashcard.
+         * @param {string} id - The ID of the flashcard to delete.
+         */
+        async function confirmDeleteFlashcard(id) {
+            const confirmed = await showModal('Delete Flashcard', 'Are you sure you want to delete this flashcard? This action cannot be undone.', 'confirm');
+            if (confirmed) {
+                deleteFlashcard(id);
+            }
         }
-    }
 
-    // Update navigation buttons and counter
-    function updateNavigation() {
-        cardCounterSpan.textContent = `${flashcards.length > 0 ? currentCardIndex + 1 : 0} / ${flashcards.length}`;
+        /**
+         * Deletes a flashcard by its ID.
+         * @param {string} id - The ID of the flashcard to delete.
+         */
+        function deleteFlashcard(id) {
+            const cardElement = document.getElementById(id);
+            if (cardElement) {
+                // Add removing class for animation
+                cardElement.classList.add('removing');
+                cardElement.addEventListener('animationend', () => {
+                    cardElement.remove(); // Remove from DOM after animation
+                    flashcards = flashcards.filter(card => card.id !== id); // Remove from array
+                    saveFlashcards(); // Save updated array to localStorage
 
-        prevCardBtn.disabled = currentCardIndex === 0;
-        nextCardBtn.disabled = currentCardIndex === flashcards.length - 1;
-
-        // Add/remove disabled class for styling
-        if (prevCardBtn.disabled) prevCardBtn.classList.add('disabled'); else prevCardBtn.classList.remove('disabled');
-        if (nextCardBtn.disabled) nextCardBtn.classList.add('disabled'); else nextCardBtn.classList.remove('disabled');
-    }
-
-    // Navigate to the previous card
-    prevCardBtn.addEventListener('click', () => {
-        if (currentCardIndex > 0) {
-            currentCardIndex--;
-            displayCurrentCard();
+                    if (flashcards.length === 0) {
+                        noFlashcardsMessage.classList.remove('hidden'); // Show message if no cards left
+                    }
+                }, { once: true }); // Ensure listener runs only once
+            }
         }
-    });
 
-    // Navigate to the next card
-    nextCardBtn.addEventListener('click', () => {
-        if (currentCardIndex < flashcards.length - 1) {
-            currentCardIndex++;
-            displayCurrentCard();
+        /**
+         * Initializes the application: loads saved flashcards and sets up event listeners.
+         */
+        function initializeApp() {
+            loadFlashcards(); // Load existing flashcards on startup
+            createFlashcardBtn.addEventListener('click', addFlashcard);
+
+            // Initially show/hide "No flashcards" message based on loaded data
+            if (flashcards.length === 0) {
+                noFlashcardsMessage.classList.remove('hidden');
+            } else {
+                noFlashcardsMessage.classList.add('hidden');
+            }
         }
-    });
 
-    // Flip the flashcard
-    flashcard.addEventListener('click', (event) => {
-        // Prevent flipping if clicking on the action buttons
-        if (event.target.closest('.card-actions-top button')) {
-            return;
-        }
-         if (flashcards.length > 0) { // Only flip if there are cards
-             flashcard.classList.toggle('flipped');
-         }
-    });
-
-    // --- Edit Mode ---
-
-    // Enter edit mode
-    function enterEditMode(cardId) {
-        const cardToEdit = flashcards.find(card => card.id === cardId);
-        if (cardToEdit) {
-            editCardIdInput.value = cardToEdit.id;
-            cardFrontInput.value = cardToEdit.front;
-            cardBackInput.value = cardToEdit.back;
-
-            // Switch button visibility
-            saveCardBtn.classList.add('hidden');
-            updateCardBtn.classList.remove('hidden');
-            cancelEditBtn.classList.remove('hidden');
-
-            cardFrontInput.focus(); // Set focus to the front input
-        }
-    }
-
-    // Exit edit mode
-    function exitEditMode() {
-        editCardIdInput.value = '';
-        saveCardBtn.classList.remove('hidden');
-        updateCardBtn.classList.add('hidden');
-        cancelEditBtn.classList.add('hidden');
-        clearForm();
-    }
-
-    // Add event listeners to edit and delete buttons (delegation might be better for many cards)
-    // For simplicity here, we'll add listeners when displaying the card
-    // This is handled within the displayCurrentCard function now.
-
-
-    // --- Form Management ---
-
-    // Clear input form
-    function clearForm() {
-        cardFrontInput.value = '';
-        cardBackInput.value = '';
-    }
-
-    // --- Event Listeners ---
-    saveCardBtn.addEventListener('click', addOrUpdateCard);
-    updateCardBtn.addEventListener('click', addOrUpdateCard);
-    cancelEditBtn.addEventListener('click', exitEditMode);
-
-    // Event listeners for edit/delete buttons on the displayed card
-    flashcard.addEventListener('click', (event) => {
-        const editBtn = event.target.closest('.edit-card-btn');
-        const deleteBtn = event.target.closest('.delete-card-btn');
-        const currentCard = flashcards[currentCardIndex];
-
-        if (editBtn && currentCard) {
-            enterEditMode(currentCard.id);
-        } else if (deleteBtn && currentCard) {
-            deleteCard(currentCard.id);
-        }
-    });
-
-
-    // --- Initial Load ---
-    loadFlashcards(); // Load flashcards and initialize the app
-});
+        // Initialize the app when the DOM is fully loaded
+        document.addEventListener('DOMContentLoaded', initializeApp);

@@ -1,0 +1,300 @@
+ :root {
+            --background-black: #0A0A0C;
+            --panel-background: #1C1C1E;
+            --text-color-primary: #FFFFFF;
+            --text-color-secondary: #AEAEB2;
+            --gradient-purple: #5856d6;
+            --gradient-blue: #007AFF;
+            --button-primary: #007AFF;
+            --button-secondary: #3A3A3C;
+            --card-color-1-start: #FFD700; /* Gold */
+            --card-color-1-end: #FFA500;   /* Orange */
+            --card-color-2-start: #FF6347; /* Tomato */
+            --card-color-2-end: #FF4500;   /* OrangeRed */
+            --card-color-3-start: #4682B4; /* SteelBlue */
+            --card-color-3-end: #4169E1;   /* RoyalBlue */
+            --card-color-4-start: #9370DB; /* MediumPurple */
+            --card-color-4-end: #8A2BE2;   /* BlueViolet */
+            --card-color-5-start: #32CD32; /* LimeGreen */
+            --card-color-5-end: #228B22;   /* ForestGreen */
+            --card-color-6-start: #FF8C00; /* DarkOrange */
+            --card-color-6-end: #FF4500;   /* OrangeRed */
+            --card-color-7-start: #20B2AA; /* LightSeaGreen */
+            --card-color-7-end: #008080;   /* Teal */
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--background-black);
+            color: var(--text-color-primary);
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-image: radial-gradient(circle at top left, hsla(241, 60%, 62%, 0.15), transparent 50%),
+                              radial-gradient(circle at bottom right, hsla(210, 100%, 50%, 0.15), transparent 50%);
+            background-attachment: fixed;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1024px; /* lg */
+            padding: 1rem; /* p-4 */
+        }
+        @media (min-width: 768px) { /* md */
+            .container {
+                padding: 2rem; /* p-8 */
+            }
+        }
+
+
+        .header-title {
+            font-size: 2.25rem; /* text-4xl */
+            line-height: 2.5rem;
+            font-weight: 700; /* font-bold */
+            background-image: linear-gradient(to right, var(--gradient-purple), var(--gradient-blue));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        @media (min-width: 640px) { /* sm */
+            .header-title {
+                font-size: 3rem; /* text-5xl */
+                line-height: 1;
+            }
+        }
+         @media (min-width: 768px) { /* md */
+            .header-title {
+                font-size: 3.75rem; /* text-6xl */
+                line-height: 1;
+            }
+        }
+
+
+        .input-field {
+            flex-grow: 1;
+            padding: 1rem; /* p-4 */
+            background-color: #2C2C2E;
+            color: var(--text-color-primary);
+            border: 1px solid var(--button-secondary);
+            border-radius: 0.5rem; /* rounded-lg */
+            outline: none;
+            transition: all 0.3s ease-in-out;
+            font-size: 1.125rem; /* text-lg */
+        }
+        .input-field:focus {
+            box-shadow: 0 0 0 2px var(--button-primary);
+            border-color: var(--button-primary);
+        }
+
+        .button-primary {
+            padding: 1rem; /* p-4 */
+            background-color: var(--button-primary);
+            color: var(--text-color-primary);
+            font-weight: 600; /* font-semibold */
+            border-radius: 0.5rem; /* rounded-lg */
+            transition: all 0.2s ease-in-out;
+            font-size: 1.125rem; /* text-lg */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem; /* gap-2 */
+        }
+        .button-primary:hover {
+            background-color: rgba(0, 122, 255, 0.8); /* Adjust opacity for hover */
+            transform: scale(1.05);
+        }
+        .button-primary:focus {
+             box-shadow: 0 0 0 2px var(--background-black), 0 0 0 4px var(--button-primary);
+        }
+        .button-primary:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        .button-primary:disabled:hover {
+            transform: none;
+            background-color: var(--button-primary);
+        }
+
+        .flashcard-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem; /* gap-6 */
+        }
+        @media (min-width: 640px) { /* sm */
+            .flashcard-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        @media (min-width: 1024px) { /* lg */
+            .flashcard-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        .flashcard-container {
+            perspective: 1000px;
+            width: 100%;
+            height: 16rem; /* h-64 */
+        }
+         @media (min-width: 640px) { /* sm */
+            .flashcard-container {
+                height: 18rem; /* h-72 */
+            }
+        }
+        @media (min-width: 768px) { /* md */
+            .flashcard-container {
+                height: 20rem; /* h-80 */
+            }
+        }
+
+        .flashcard {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.6s;
+            cursor: pointer;
+        }
+        .flashcard.is-flipped {
+            transform: rotateY(180deg);
+        }
+        .flashcard-face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            overflow-y: auto;
+            color: var(--text-color-primary);
+        }
+        .flashcard-front {
+            /* Dynamic background set in JS */
+        }
+        .flashcard-back {
+            background-color: var(--panel-background);
+            border: 1px solid var(--button-secondary);
+            transform: rotateY(180deg);
+        }
+        .flashcard-face::-webkit-scrollbar {
+            width: 8px;
+        }
+        .flashcard-face::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+        .flashcard-face::-webkit-scrollbar-thumb {
+            background: var(--button-primary);
+            border-radius: 10px;
+        }
+        .flashcard-face::-webkit-scrollbar-thumb:hover {
+            background: var(--gradient-blue);
+        }
+
+        .loading-indicator {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem; /* space-y-4 */
+            margin-top: 2.5rem; /* my-10 */
+            margin-bottom: 2.5rem;
+            padding: 1.5rem; /* p-6 */
+            background-color: var(--panel-background);
+            border-radius: 0.75rem; /* rounded-xl */
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05); /* shadow-xl */
+        }
+        .loading-indicator .ph-arrow-clockwise {
+            font-size: 3rem; /* text-4xl or size 48 */
+            color: var(--button-primary);
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .message-box {
+            position: fixed;
+            top: 1.25rem; /* top-5 */
+            right: 1.25rem; /* right-5 */
+            padding: 1rem; /* p-4 */
+            border-radius: 0.5rem; /* rounded-lg */
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05); /* shadow-xl */
+            border-width: 1px;
+            backdrop-filter: blur(10px);
+            z-index: 50;
+            max-width: 24rem; /* max-w-sm */
+            animation: pulse-once 1.5s cubic-bezier(0.4, 0, 0.6, 1);
+        }
+
+        @keyframes pulse-once { /* Similar to Tailwind's animate-pulse but not continuous */
+            0%, 100% { opacity: 1; }
+            50% { opacity: .8; }
+        }
+
+        .message-box.error {
+            background-color: rgba(239, 68, 68, 0.2); /* bg-red-500/20 */
+            border-color: #EF4444; /* border-red-500 */
+        }
+        .message-box.error .message-title {
+            color: #FCA5A5; /* text-red-300 */
+        }
+        .message-box.error .ph-warning-circle {
+            color: #F87171; /* text-red-400 */
+        }
+        .message-box-content {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem; /* space-x-3 */
+        }
+        .message-box .ph-icon {
+            font-size: 1.5rem; /* ph-2x */
+        }
+        .message-title {
+            font-weight: 600; /* font-semibold */
+        }
+        .message-text {
+            font-size: 0.875rem; /* text-sm */
+            color: var(--text-color-secondary);
+        }
+        .message-dismiss {
+            color: var(--text-color-secondary);
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0.25rem;
+        }
+        .message-dismiss:hover {
+            color: var(--text-color-primary);
+        }
+        .hidden {
+            display: none !important;
+        }
+        .speaker-button {
+            position: absolute;
+            top: 0.75rem; /* top-3 */
+            right: 0.75rem; /* right-3 */
+            padding: 0.5rem; /* p-2 */
+            border-radius: 9999px; /* rounded-full */
+            background: none;
+            border: none;
+            color: var(--text-color-primary);
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        .speaker-button:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        .speaker-button .ph-speaker-simple-high {
+            font-size: 1.25rem; /* size 20 */
+        }
