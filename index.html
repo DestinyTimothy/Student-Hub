@@ -3,80 +3,153 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your Student Hub</title>
+    <title>Student Hub - Your Academic Companion</title>
+    <!-- Inter Font from Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <!-- Tailwind CSS CDN for utility-first styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Phosphor Icons CDN for modern, flexible icons -->
     <script src="https://unpkg.com/@phosphor-icons/web@2.1.1/dist/phosphor.js"></script>
     <link rel="stylesheet" href="style.css">
-    
 </head>
-<body>
+<body class="selection:bg-blue-600 selection:text-white">
 
-    <div class="background-gradient"></div>
+    <!-- Global Background Gradient Overlay for a sleek, immersive feel -->
+    <div class="background-gradient-overlay"></div>
 
-    <header>
-        <div class="clock" id="current-time">
-            Loading time...
+    <!-- Floating Background Shapes for extra visual dynamism -->
+    <div class="floating-shape floating-shape-1"></div>
+    <div class="floating-shape floating-shape-2"></div>
+    <div class="floating-shape floating-shape-3"></div>
+    <div class="floating-shape floating-shape-4"></div>
+
+    <!-- Header Section: App Title and Live Clock -->
+    <header class="relative z-10 p-6 md:p-8 flex items-center justify-between backdrop-filter backdrop-blur-lg bg-gray-900 bg-opacity-70 border-b border-gray-800 rounded-b-xl shadow-lg animate-fade-in">
+        <div class="flex items-center space-x-3">
+            <!-- Header icon with a subtle float animation -->
+            <i class="ph-fill ph-graduation-cap text-4xl text-blue-400 animate-float" style="animation-delay: 0.2s; animation-duration: 4s;"></i>
+            <span class="text-3xl md:text-4xl font-extrabold text-white tracking-tight animate-fade-in" style="animation-delay: 0.3s;">Student Hub</span>
+        </div>
+        <!-- Live Clock Display -->
+        <div class="clock text-sm md:text-base text-gray-300 bg-gray-800 bg-opacity-60 py-2 px-4 rounded-full backdrop-filter backdrop-blur-md shadow-md animate-fade-in" id="current-time" style="animation-delay: 0.4s;">
+            Loading Time...
         </div>
     </header>
 
-    <main class="container">
-        <section class="intro-section">
-            <h1 id="welcome-message">Welcome!</h1>
-            <p>Your all-in-one companion for academic success.</p>
+    <main class="relative z-10 container mx-auto px-4 py-12 md:py-16">
+
+        <!-- Hero Section: Static Welcome Message and Intro -->
+        <section class="text-center mb-16 md:mb-24 animate-slide-in-up" style="animation-delay: 0.5s;">
+            <div class="max-w-4xl mx-auto">
+                <!-- Hero text with added glow effect -->
+                <h1 class="text-4xl md:text-6xl font-extrabold leading-tight mb-4 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-400 hero-text-glow" id="welcome-message">
+                    Welcome to Student Hub!
+                </h1>
+                <p class="text-lg md:text-2xl text-gray-300 mb-8 max-w-2xl mx-auto">
+                    Your all-in-one companion designed to streamline your student life, boost productivity, and achieve academic excellence.
+                </p>
+                <!-- Scroll down indicator -->
+                <div class="flex justify-center mt-12 animate-bounce" style="animation-delay: 1s;">
+                    <i class="ph-fill ph-arrow-down text-3xl text-gray-400"></i>
+                </div>
+                <!-- Message box for input validation/feedback (kept for general utility) -->
+                <div class="message-box fixed z-30 opacity-0" id="input-message-box"></div>
+            </div>
         </section>
 
-        <section class="tools-section">
-            <div class="card-grid">
-                <a href="GPA Checker/gpa-checker.html" class="tool-card">
-                    <div class="icon-placeholder" style="background-color: #FF9500;">
+        <!-- Features Section: Grid of Clickable Cards -->
+        <section class="tools-section animate-slide-in-up" style="animation-delay: 0.7s;">
+            <!-- Heading color now matches hero text gradient -->
+            <h2 class="text-3xl md:text-4xl font-extrabold text-center mb-12 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-400">
+                Explore Your Tools
+            </h2>
+            <div class="card-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+                <!-- GPA Checker Card -->
+                <a href="GPA Checker/gpa-checker.html" class="tool-card group bg-gray-800 border border-gray-700 rounded-2xl p-6 md:p-8 shadow-xl overflow-hidden relative transform transition duration-300 hover:scale-[1.02] hover:shadow-2xl flex flex-col items-start" data-feature-name="GPA Checker">
+                    <div class="absolute top-0 left-0 w-full h-1.5 bg-orange-500 group-hover:h-2 transition-all duration-300"></div>
+                    <div class="icon-placeholder bg-orange-600 rounded-xl w-14 h-14 flex items-center justify-center mb-5 text-white text-3xl shadow-lg">
                         <i class="ph-fill ph-calculator"></i>
                     </div>
-                    <h3>GPA Checker</h3>
-                    <p>Calculate your academic performance.</p>
+                    <h3 class="text-xl md:text-2xl font-bold mb-2 text-orange-400 group-hover:text-orange-300 transition duration-300">GPA Checker</h3>
+                    <p class="text-gray-300 text-base">Effortlessly calculate and track your academic performance.</p>
                 </a>
-                <a href="Notes/notes.html" class="tool-card">
-                    <div class="icon-placeholder" style="background-color: #34C759;">
+
+                <!-- Notes App Card -->
+                <a href="Notes/notes.html" class="tool-card group bg-gray-800 border border-gray-700 rounded-2xl p-6 md:p-8 shadow-xl overflow-hidden relative transform transition duration-300 hover:scale-[1.02] hover:shadow-2xl flex flex-col items-start" data-feature-name="Notes App">
+                    <div class="absolute top-0 left-0 w-full h-1.5 bg-green-500 group-hover:h-2 transition-all duration-300"></div>
+                    <div class="icon-placeholder bg-green-600 rounded-xl w-14 h-14 flex items-center justify-center mb-5 text-white text-3xl shadow-lg">
                         <i class="ph-fill ph-notebook"></i>
                     </div>
-                    <h3>Notes App</h3>
-                    <p>Capture and organize your thoughts.</p>
+                    <h3 class="text-xl md:text-2xl font-bold mb-2 text-green-400 group-hover:text-green-300 transition duration-300">Notes App</h3>
+                    <p class="text-gray-300 text-base">Organize your lecture notes and study materials in one intuitive place.</p>
                 </a>
-                <a href="Timetable/timetable.html" class="tool-card">
-                    <div class="icon-placeholder" style="background-color: #007AFF;">
-                        <i class="ph-fill ph-calendar-blank"></i> </div>
-                    <h3>Timetable</h3>
-                    <p>Stay on top of your schedule.</p>
+
+                <!-- Timetable Card -->
+                <a href="Timetable/timetable.html" class="tool-card group bg-gray-800 border border-gray-700 rounded-2xl p-6 md:p-8 shadow-xl overflow-hidden relative transform transition duration-300 hover:scale-[1.02] hover:shadow-2xl flex flex-col items-start" data-feature-name="Timetable">
+                    <div class="absolute top-0 left-0 w-full h-1.5 bg-blue-500 group-hover:h-2 transition-all duration-300"></div>
+                    <div class="icon-placeholder bg-blue-600 rounded-xl w-14 h-14 flex items-center justify-center mb-5 text-white text-3xl shadow-lg">
+                        <i class="ph-fill ph-calendar-blank"></i>
+                    </div>
+                    <h3 class="text-xl md:text-2xl font-bold mb-2 text-blue-400 group-hover:text-blue-300 transition duration-300">Timetable</h3>
+                    <p class="text-gray-300 text-base">Visualize your class schedule and appointments with ease.</p>
                 </a>
-                <a href="To-do list/todo_html.html" class="tool-card">
-                    <div class="icon-placeholder" style="background-color: #5856D6;">
-                        <i class="ph-fill ph-check-square"></i> </div>
-                    <h3>School To-Do List</h3>
-                    <p>Manage assignments and tasks.</p>
+
+                <!-- School To-Do List Card -->
+                <a href="To-do list/todo_html.html" class="tool-card group bg-gray-800 border border-gray-700 rounded-2xl p-6 md:p-8 shadow-xl overflow-hidden relative transform transition duration-300 hover:scale-[1.02] hover:shadow-2xl flex flex-col items-start" data-feature-name="School To-Do List">
+                    <div class="absolute top-0 left-0 w-full h-1.5 bg-indigo-500 group-hover:h-2 transition-all duration-300"></div>
+                    <div class="icon-placeholder bg-indigo-600 rounded-xl w-14 h-14 flex items-center justify-center mb-5 text-white text-3xl shadow-lg">
+                        <i class="ph-fill ph-check-square"></i>
+                    </div>
+                    <h3 class="text-xl md:text-2xl font-bold mb-2 text-indigo-400 group-hover:text-indigo-300 transition duration-300">School To-Do List</h3>
+                    <p class="text-gray-300 text-base">Keep track of assignments and deadlines, never miss a task.</p>
                 </a>
-                <a href="AI Chatbot/chatbot_html.html" class="tool-card">
-                    <div class="icon-placeholder" style="background-color: #9900FF;">
-                        <i class="ph-fill ph-robot"></i> </div>
+
+                <!-- AI Assignment Assistance Card -->
+                <a href="AI Chatbot/chatbot_html.html" class="tool-card group bg-gray-800 border border-gray-700 rounded-2xl p-6 md:p-8 shadow-xl overflow-hidden relative transform transition duration-300 hover:scale-[1.02] hover:shadow-2xl flex flex-col items-start" data-feature-name="AI Assignment Assistance">
+                    <div class="absolute top-0 left-0 w-full h-1.5 bg-purple-600 group-hover:h-2 transition-all duration-300"></div>
+                    <div class="icon-placeholder bg-purple-700 rounded-xl w-14 h-14 flex items-center justify-center mb-5 text-white text-3xl shadow-lg">
+                        <i class="ph-fill ph-robot"></i>
+                    </div>
                     <h3>AI Assignment Assistance</h3>
-                    <p>Get help on your assignments.</p>
+                    <p class="text-gray-300 text-base">Get intelligent assistance and insights for your assignments.</p>
                 </a>
-                <a href="Flashcards/flashcard_html.html" class="tool-card">
-                    <div class="icon-placeholder" style="background-color: #FF2D55;">
-                        <i class="ph-fill ph-cards"></i> </div>
-                    <h3>Flashcard Creator</h3>
-                    <p>Study better and faster with custom flashcards.</p>
+
+                <!-- Flashcard Creator Card -->
+                <a href="Flashcards/flashcard_html.html" class="tool-card group bg-gray-800 border border-gray-700 rounded-2xl p-6 md:p-8 shadow-xl overflow-hidden relative transform transition duration-300 hover:scale-[1.02] hover:shadow-2xl flex flex-col items-start" data-feature-name="Flashcard Creator">
+                    <div class="absolute top-0 left-0 w-full h-1.5 bg-pink-500 group-hover:h-2 transition-all duration-300"></div>
+                    <div class="icon-placeholder bg-pink-600 rounded-xl w-14 h-14 flex items-center justify-center mb-5 text-white text-3xl shadow-lg">
+                        <i class="ph-fill ph-cards"></i>
+                    </div>
+                    <h3 class="text-xl md:text-2xl font-bold mb-2 text-pink-400 group-hover:text-pink-300 transition duration-300">Flashcard Creator</h3>
+                    <p class="text-gray-300 text-base">Create custom flashcards to master any subject efficiently.</p>
                 </a>
             </div>
         </section>
     </main>
 
-    <div class="modal-overlay" id="name-modal">
-        <div class="modal-content">
-            <h2>Welcome! What's your name?</h2>
-            <input type="text" id="username-input" placeholder="Enter your name">
-            <button id="save-name-btn">Continue</button>
-            <div class="message-box" id="input-message-box"></div>
+    <!-- Local Storage Disclaimer Modal -->
+    <div class="disclaimer-modal-overlay" id="disclaimer-modal">
+        <div class="disclaimer-modal-content">
+            <h2 class="text-2xl md:text-3xl font-bold mb-4 text-blue-400">Important Information!</h2>
+            <p class="text-gray-300 text-lg mb-6 leading-relaxed">
+                You are about to access the <strong class="text-white" id="feature-name-display"></strong> feature.
+                Please note that <strong class="text-yellow-400">all your data for this feature will be saved directly on THIS BROWSER and THIS DEVICE only.</strong>
+            </p>
+            <p class="text-gray-400 text-base mb-8">
+                Your data will <strong class="text-red-400">NOT</strong> be saved to the cloud,
+                meaning it will not be accessible from other devices or browsers.
+                Clearing your browser's data may result in loss of your saved information for this feature.
+            </p>
+            <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
+                <button id="continue-feature-btn" class="px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-full shadow-lg transition duration-300 transform hover:scale-105">
+                    Continue to Feature
+                </button>
+                <button id="cancel-disclaimer-btn" class="px-8 py-3 bg-gray-700 hover:bg-gray-600 text-gray-200 font-semibold rounded-full shadow-lg transition duration-300 transform hover:scale-105">
+                    Cancel
+                </button>
+            </div>
         </div>
     </div>
 

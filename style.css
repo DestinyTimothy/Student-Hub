@@ -1,305 +1,181 @@
-        /* CSS Variables for consistent theming */
+  /* Custom CSS variables for consistent theming, extending Tailwind defaults */
         :root {
-            --background-black: #0A0A0C;
-            --card-background: #1C1C1E;
-            --text-color-primary: #FFFFFF;
-            --text-color-secondary: #AEAEB2;
+            --bg-dark: #0A0A0C;
+            --card-bg: #1C1C1E;
+            --text-primary: #FFFFFF;
+            --text-secondary: #AEAEB2;
             --border-color: #3A3A3C;
-            --gradient-purple: #5856d6; /* Indigo/Purple */
-            --gradient-blue: #007AFF; /* Blue */
-            --modal-bg-dark: rgba(0, 0, 0, 0.8);
+            --accent-purple: #5856d6;
+            --accent-blue: #007AFF;
+            --accent-green: #34C759;
+            --accent-orange: #FF9500;
+            --accent-pink: #FF2D55;
+            --accent-vibrant-purple: #9900FF;
+            --modal-bg-overlay: rgba(0, 0, 0, 0.8);
             --modal-blur-strength: 15px;
         }
 
-        /* Base styles for body */
+        /* Base body styles, ensuring full height and custom font */
         body {
-            margin: 0;
             font-family: 'Inter', sans-serif;
-            background-color: var(--background-black);
-            color: var(--text-color-primary);
+            background-color: var(--bg-dark);
+            color: var(--text-primary);
             min-height: 100vh;
-            position: relative; /* Needed for gradient positioning */
-            padding-bottom: 50px; /* Add some padding at the bottom */
             overflow-x: hidden; /* Prevent horizontal scroll */
+            position: relative; /* For background gradient positioning */
+            padding-bottom: 50px; /* Space for potential footer or content */
         }
 
-        /* Background gradient for visual depth */
-        .background-gradient {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle at top left, var(--gradient-purple) 0%, transparent 25%),
-                        radial-gradient(circle at bottom right, var(--gradient-blue) 0%, transparent 25%);
-            opacity: 0.15; /* Subtle gradient effect */
-            z-index: -1; /* Send to back */
+        /* Global background gradient overlay for visual depth */
+        .background-gradient-overlay {
+            position: fixed;
+            inset: 0; /* Covers the entire viewport */
+            pointer-events: none; /* Allows clicks/interactions on elements beneath it */
+            opacity: 0.15; /* Subtle transparency */
+            z-index: -1; /* Sends it to the back */
+            background: radial-gradient(circle at top left, var(--accent-purple) 0%, transparent 25%),
+                        radial-gradient(circle at bottom right, var(--accent-blue) 0%, transparent 25%);
         }
 
-        /* Main container for content */
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
+        /* Keyframe animations for dynamic UI elements */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
 
-        /* Header styling */
-        header {
-            padding: 20px;
-            display: flex;
-            justify-content: flex-end; /* Push clock to the right */
-            position: relative;
-            z-index: 10; /* Ensure clock is above gradient */
+        @keyframes slideInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Clock styling with frosted glass effect */
-        .clock {
-            font-size: 1rem;
-            color: var(--text-color-secondary);
-            background-color: rgba(28, 28, 30, 0.6); /* Slightly transparent background */
-            padding: 8px 15px;
-            border-radius: 20px;
-            backdrop-filter: blur(10px); /* Frosted glass effect */
-            -webkit-backdrop-filter: blur(10px); /* Safari support */
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+        @keyframes scaleIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
         }
 
-        /* Intro section styling */
-        .intro-section {
-            text-align: center;
-            margin-top: 50px;
-            margin-bottom: 60px;
-            position: relative;
-            z-index: 5;
-            animation: fadeInBottom 0.8s ease-out forwards; /* Animation for intro section */
-            opacity: 0; /* Start invisible for animation */
+        @keyframes float {
+            0% { transform: translateY(0px) translateX(0px) rotate(0deg); opacity: 0.7; }
+            25% { transform: translateY(-5px) translateX(5px) rotate(1deg); opacity: 0.8; }
+            50% { transform: translateY(0px) translateX(0px) rotate(0deg); opacity: 0.7; }
+            75% { transform: translateY(5px) translateX(-5px) rotate(-1deg); opacity: 0.8; }
+            100% { transform: translateY(0px) translateX(0px) rotate(0deg); opacity: 0.7; }
         }
 
-        .intro-section h1 {
-            font-size: 3em;
-            font-weight: 700; /* Bold */
-            margin-bottom: 10px;
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
         }
 
-        .intro-section p {
-            font-size: 1.2em;
-            color: var(--text-color-secondary);
+        /* Applying animations with delays for a staggered effect */
+        .animate-fade-in { animation: fadeIn 0.8s ease-out forwards; }
+        .animate-slide-in-up { animation: slideInUp 0.8s ease-out forwards; }
+        .animate-scale-in { animation: scaleIn 0.5s ease-out forwards; }
+        .animate-float { animation: float 6s ease-in-out infinite; }
+        .animate-bounce { animation: bounce 2s infinite; }
+
+        /* Custom scrollbar for a sleek look (WebKit browsers) */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #1C1C1E;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--accent-blue);
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #0056b3;
         }
 
-        /* Tools section styling */
-        .tools-section {
-            position: relative;
-            z-index: 5;
-        }
-
-        /* Card grid layout for responsiveness */
-        .card-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px; /* Consistent gap between cards */
-        }
-
-        /* Individual tool card styling */
-        .tool-card {
-            background-color: var(--card-background);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 25px;
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start; /* Align content to the left */
-            text-decoration: none; /* Remove underline from link */
-            color: var(--text-color-primary);
-            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
-            overflow: hidden; /* Hide overflow for border-radius */
-            position: relative;
-            animation: fadeIn 0.6s ease-out forwards; /* Fade in animation for cards */
-            opacity: 0; /* Start invisible for animation */
-        }
-
-        /* Delay animation for each card for a staggered effect */
-        .tool-card:nth-child(1) { animation-delay: 0.1s; }
-        .tool-card:nth-child(2) { animation-delay: 0.2s; }
-        .tool-card:nth-child(3) { animation-delay: 0.3s; }
-        .tool-card:nth-child(4) { animation-delay: 0.4s; }
-        .tool-card:nth-child(5) { animation-delay: 0.5s; }
-        .tool-card:nth-child(6) { animation-delay: 0.6s; }
-
-
-        /* Color strip at the top of each card */
-        .tool-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 5px; /* Color strip at the top */
-            background-color: transparent; /* Default */
-            transition: background-color 0.2s ease-in-out;
-        }
-
-        /* Specific colors for each card's top strip */
-        .tool-card:nth-child(1)::before { background-color: #FF9500; } /* Orange */
-        .tool-card:nth-child(2)::before { background-color: #34C759; } /* Green */
-        .tool-card:nth-child(3)::before { background-color: #007AFF; } /* Blue */
-        .tool-card:nth-child(4)::before { background-color: #5856D6; } /* Indigo/Purple */
-        .tool-card:nth-child(5)::before { background-color: #9900FF; } /* Custom Purple */
-        .tool-card:nth-child(6)::before { background-color: #FF2D55; } /* Red-Pink */
-
-
-        /* Hover effect for tool cards */
-        .tool-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-        }
-
-        /* Icon placeholder styling */
-        .icon-placeholder {
-            width: 50px;
-            height: 50px;
-            border-radius: 10px; /* Slightly rounded icons */
-            margin-bottom: 15px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 2em; /* For Phosphor icons */
-            color: white; /* Icon color */
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Subtle shadow for icons */
-        }
-
-        .tool-card h3 {
-            font-size: 1.5em;
-            font-weight: 600;
-            margin: 0 0 8px 0;
-        }
-
-        .tool-card p {
-            font-size: 1em;
-            color: var(--text-color-secondary);
-            margin: 0;
-        }
-
-        /* Modal Styling */
-        .modal-overlay {
+        /* Styling for the disclaimer modal */
+        .disclaimer-modal-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: var(--modal-bg-dark); /* Semi-transparent black background */
-            backdrop-filter: blur(var(--modal-blur-strength)); /* Blur the background */
+            background-color: var(--modal-bg-overlay); /* Semi-transparent dark background */
+            backdrop-filter: blur(var(--modal-blur-strength)); /* Blur the background content */
             -webkit-backdrop-filter: blur(var(--modal-blur-strength)); /* Safari support */
             display: flex;
             justify-content: center;
             align-items: center;
-            z-index: 1000; /* Above everything else */
+            z-index: 2000; /* High z-index to appear on top */
             visibility: hidden; /* Hidden by default */
             opacity: 0;
-            transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+            transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out; /* Smooth transition */
         }
 
-        .modal-overlay.visible {
+        .disclaimer-modal-overlay.visible {
             visibility: visible;
             opacity: 1;
         }
 
-        .modal-content {
-            background-color: var(--card-background);
+        .disclaimer-modal-content {
+            background-color: var(--card-bg);
             border-radius: 12px;
             padding: 30px;
             text-align: center;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            max-width: 400px;
-            width: 90%; /* Make it responsive */
-            box-sizing: border-box;
-            transform: translateY(20px); /* Start slightly below for animation */
+            max-width: 500px;
+            width: 90%; /* Responsive width */
+            box-sizing: border-box; /* Include padding in width calculation */
+            transform: translateY(20px); /* Start slightly below for slide-up animation */
             transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+            border: 1px solid var(--border-color); /* Subtle border */
         }
 
-        .modal-overlay.visible .modal-content {
+        .disclaimer-modal-overlay.visible .disclaimer-modal-content {
             transform: translateY(0); /* Slide up on visible */
             opacity: 1;
         }
 
-        .modal-content h2 {
-            font-size: 1.8em;
-            margin-top: 0;
-            margin-bottom: 20px;
-            color: var(--text-color-primary);
+        /* Hero text glow effect */
+        .hero-text-glow {
+            text-shadow:
+                0 0 5px rgba(0, 122, 255, 0.5), /* Blue glow */
+                0 0 10px rgba(88, 86, 214, 0.4); /* Purple glow */
         }
 
-        .modal-content input[type="text"] {
-            width: 100%;
-            padding: 15px;
-            margin-bottom: 20px;
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            background-color: #2C2C2E; /* Darker input field */
-            color: var(--text-color-primary);
-            font-size: 1em;
-            box-sizing: border-box; /* Include padding in width */
+        /* Floating background shapes */
+        .floating-shape {
+            position: absolute;
+            background: radial-gradient(circle at center, var(--color) 0%, transparent 70%);
+            opacity: 0.1; /* Very subtle */
+            filter: blur(30px);
+            border-radius: 50%;
+            pointer-events: none;
+            animation: float var-duration ease-in-out infinite;
         }
-
-        .modal-content input[type="text"]::placeholder {
-            color: var(--text-color-secondary);
-            opacity: 0.7;
+        /* Specific positions and sizes for floating shapes */
+        .floating-shape-1 {
+            width: 150px; height: 150px;
+            top: 10%; left: 5%;
+            --color: var(--accent-purple);
+            --duration: 7s;
+            animation-delay: 0s;
         }
-
-        .modal-content button {
-            background-color: var(--gradient-blue); /* Use a vibrant button color */
-            color: white;
-            border: none;
-            border-radius: 8px;
-            padding: 12px 25px;
-            font-size: 1.1em;
-            cursor: pointer;
-            transition: background-color 0.2s ease-in-out, transform 0.1s ease-in-out;
+        .floating-shape-2 {
+            width: 200px; height: 200px;
+            top: 70%; left: 80%;
+            --color: var(--accent-blue);
+            --duration: 8s;
+            animation-delay: 1s;
         }
-
-        .modal-content button:hover {
-            background-color: #0056b3; /* Darker shade on hover */
-            transform: translateY(-2px); /* Slight lift on hover */
+        .floating-shape-3 {
+            width: 100px; height: 100px;
+            top: 30%; left: 90%;
+            --color: var(--accent-green);
+            --duration: 6s;
+            animation-delay: 2s;
         }
-
-        /* Message box for alerts (replaces alert()) */
-        .message-box {
-            position: fixed;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: #FF9500; /* Orange for warnings */
-            color: white;
-            padding: 10px 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-            z-index: 1001;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
-        }
-
-        .message-box.show {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        /* Keyframe animations */
-        @keyframes fadeInBottom {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
+        .floating-shape-4 {
+            width: 180px; height: 180px;
+            top: 50%; left: 15%;
+            --color: var(--accent-orange);
+            --duration: 7.5s;
+            animation-delay: 0.5s;
         }
